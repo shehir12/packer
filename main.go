@@ -16,6 +16,8 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/hashicorp/packer/hcl2template"
+
 	"github.com/hashicorp/go-uuid"
 	"github.com/hashicorp/packer/command"
 	"github.com/hashicorp/packer/packer"
@@ -208,9 +210,11 @@ func wrappedMain() int {
 			}
 		}
 	}
+
 	// Create the CLI meta
 	CommandMeta = &command.Meta{
 		CoreConfig: &packer.CoreConfig{
+			Parser: hcl2template.NewParser(config.Provisioners, config.PostProcessors),
 			Components: packer.ComponentFinder{
 				Builder:       config.LoadBuilder,
 				Hook:          config.LoadHook,

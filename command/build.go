@@ -92,19 +92,47 @@ func (c *BuildCommand) ParseArgs(args []string) (Config, int) {
 	return cfg, 0
 }
 
+const hcl2FileExt = ".pkr.hcl"
+
+func isDir(path string) bool {
+	f, err := os.Open(path)
+	if err != nil {
+		return false
+	}
+	defer f.Close()
+	s, err := f.Stat()
+	if err != nil {
+		return false
+	}
+	return s.IsDir()
+}
+
 func (c *BuildCommand) RunContext(buildCtx context.Context, args []string) int {
 	cfg, ret := c.ParseArgs(args)
 	if ret != 0 {
 		return ret
 	}
+	var err error
 
 	// Parse the template
 	var tpl *template.Template
-	var err error
-	tpl, err = template.ParseFile(cfg.Path)
-	if err != nil {
-		c.Ui.Error(fmt.Sprintf("Failed to parse template: %s", err))
-		return 1
+	if strings.HasSuffix(cfg.Path, hcl2FileExt) || isDir(cfg.Path) {
+		hcl2tpl, diags := c.Meta.CoreConfig.Parser.Parse(cfg.Path)
+		if diags.HasErrors() {
+			c.Ui.Error(fmt.Sprintf("Failed to parse template: %s", diags))
+			return 1
+		}
+		if len(diags) != 0 {
+			c.Ui.Say(fmt.Sprintf("Warning parsing template: %s", diags))
+		}
+
+		tpl = hcl2tpl.ToTemplate()
+	} else {
+		tpl, err = template.ParseFile(cfg.Path)
+		if err != nil {
+			c.Ui.Error(fmt.Sprintf("Failed to parse template: %s", err))
+			return 1
+		}
 	}
 
 	// Get the core
