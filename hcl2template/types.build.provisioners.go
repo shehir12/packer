@@ -88,13 +88,13 @@ func (p *Parser) decodePostProvisionerGroup(block *hcl.Block) (*ProvisionerGroup
 	return pg, diags
 }
 
-func (pgs ProvisionerGroups) FlatProvisioners() []Provisioner {
-	res := []Provisioner{}
-	for _, provisionerGroup := range pgs {
-		p := *provisionerGroup
-		for _, provisioner := range p {
-			res = append(provisioner, provisioner)
-		}
-	}
-	return res
-}
+// func (pgs ProvisionerGroups) FlatProvisioners() []Provisioner {
+// 	res := []Provisioner{}
+// 	for _, provisionerGroup := range pgs {
+// 		p := *provisionerGroup
+// 		for _, provisioner := range p {
+// 			res = append(provisioner, provisioner)
+// 		}
+// 	}
+// 	return res
+// }

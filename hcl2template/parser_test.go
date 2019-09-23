@@ -54,10 +54,10 @@ func TestParser_Parse(t *testing.T) {
 					},
 					SourceRef{
 						Type: "amazon-ebs",
-						Name: "{{user `image_name`}}-ubuntu-1.0",
+						Name: "that-ubuntu-1.0",
 					}: {
 						Type: "amazon-ebs",
-						Name: "{{user `image_name`}}-ubuntu-1.0",
+						Name: "that-ubuntu-1.0",
 					},
 				},
 				Communicators: []*Communicator{
@@ -72,10 +72,10 @@ func TestParser_Parse(t *testing.T) {
 					{
 						Froms: BuildFromList{
 							{
-								Src: "src.amazon-ebs.ubuntu-1604",
+								Src: SourceRef{"amazon-ebs", "ubuntu-1604"},
 							},
 							{
-								Src: "src.virtualbox-iso.ubuntu-1204",
+								Src: SourceRef{"virtualbox-iso", "ubuntu-1204"},
 							},
 						},
 						ProvisionerGroups: ProvisionerGroups{
@@ -115,7 +115,7 @@ func TestParser_Parse(t *testing.T) {
 					&Build{
 						Froms: BuildFromList{
 							{
-								Src: "src.amazon.{{user `image_name`}-ubuntu-1.0",
+								Src: SourceRef{"amazon", "that-ubuntu-1"},
 							},
 						},
 						ProvisionerGroups: ProvisionerGroups{

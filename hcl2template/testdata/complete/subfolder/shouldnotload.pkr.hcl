@@ -2,7 +2,7 @@
 // starts resources to provision them.
 build {
     from "src.amazon-ebs.ubuntu-1604" {
-        ami_name = "{{user `image_name`}-ubuntu-1.0"
+        ami_name = "that-ubuntu-1.0"
     }
 
     from "src.virtualbox-iso.ubuntu-1204" {
@@ -38,14 +38,14 @@ build {
     post_provision {
         amazon-import {
             only = ["src.virtualbox-iso.ubuntu-1204"]
-            ami_name = "{{user `image_name`}-ubuntu-1.0"
+            ami_name = "that-ubuntu-1.0"
         }
     }
 }
 
 build {
     // build an ami using the ami from the previous build block.
-    from "src.amazon.{{user `image_name`}-ubuntu-1.0" {
+    from "src.amazon.that-ubuntu-1.0" {
         ami_name = "fooooobaaaar"
     }
 

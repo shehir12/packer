@@ -28,14 +28,14 @@ source "amazon-ebs" "ubuntu-1604" {
     }
 }
 
-source "amazon-ebs" "{{user `image_name`}}-ubuntu-1.0" {
+source "amazon-ebs" "that-ubuntu-1.0" {
     instance_type = "t2.micro"
     encrypt_boot = true
     region = "eu-west-3"
     source_ami_filter {
         filters {
             virtualization-type = "hvm"
-            name = "{{user `image_name`}-ubuntu-1.0"
+            name = "that-ubuntu-1.0"
             root-device-type = "ebs"
         }
         owners = [
