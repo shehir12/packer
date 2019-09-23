@@ -23,14 +23,9 @@ var provisionerGroupSchema = hcl.BodySchema{
 	},
 }
 
+// ProvisionerGroups is a slice of provision blocks; which contains
+// provisioners
 type ProvisionerGroups []*ProvisionerGroup
-
-func (pgs ProvisionerGroups) FirstCommunicatorRef() CommunicatorRef {
-	if len(pgs) == 0 {
-		return NoCommunicator
-	}
-	return pgs[0].CommunicatorRef
-}
 
 func (p *Parser) decodeProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hcl.Diagnostics) {
 
@@ -105,13 +100,18 @@ func (p *Parser) decodePostProvisionerGroup(block *hcl.Block) (*ProvisionerGroup
 	return pg, diags
 }
 
-// func (pgs ProvisionerGroups) FlatProvisioners() []Provisioner {
-// 	res := []Provisioner{}
-// 	for _, provisionerGroup := range pgs {
-// 		p := *provisionerGroup
-// 		for _, provisioner := range p {
-// 			res = append(provisioner, provisioner)
-// 		}
-// 	}
-// 	return res
-// }
+func (pgs ProvisionerGroups) FirstCommunicatorRef() CommunicatorRef {
+	if len(pgs) == 0 {
+		return NoCommunicator
+	}
+	return pgs[0].CommunicatorRef
+}
+
+// FlatProvisioners returns a slice containing all provisioners.
+func (pgs ProvisionerGroups) FlatProvisioners() []Provisioner {
+	res := []Provisioner{}
+	for _, provisionerGroup := range pgs {
+		res = append(res, provisionerGroup.Provisioners...)
+	}
+	return res
+}
