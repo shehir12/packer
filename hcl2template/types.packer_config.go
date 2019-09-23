@@ -42,6 +42,7 @@ func (pkrCfg *PackerConfig) ToV1Build() PackerV1Build {
 				continue
 			}
 
+			_ = from
 			_ = source
 			_ = communicator
 

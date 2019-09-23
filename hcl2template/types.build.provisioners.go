@@ -35,11 +35,15 @@ func (pgs ProvisionerGroups) FirstCommunicatorRef() CommunicatorRef {
 func (p *Parser) decodeProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hcl.Diagnostics) {
 
 	var b struct {
-		Communicator string   `hcl:"communicator"`
+		Communicator string   `hcl:"communicator,attr"`
 		Remain       hcl.Body `hcl:",remain"`
 	}
 
-	diags := gohcl.DecodeBody(block.Body, nil, &b)
+	var diags hcl.Diagnostics
+
+	_ = gohcl.DecodeBody(block.Body, nil, &b)
+	// ignoring diagnostics here as it will require communicator from the
+	// struct
 
 	pg := &ProvisionerGroup{}
 	pg.CommunicatorRef = communicatorRefFromString(b.Communicator)
@@ -71,11 +75,15 @@ var postProvisionerGroupSchema = hcl.BodySchema{
 func (p *Parser) decodePostProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hcl.Diagnostics) {
 
 	var b struct {
-		Communicator string
+		Communicator string   `hcl:"communicator,attr"`
 		Remain       hcl.Body `hcl:",remain"`
 	}
 
-	diags := gohcl.DecodeBody(block.Body, nil, &b)
+	var diags hcl.Diagnostics
+
+	_ = gohcl.DecodeBody(block.Body, nil, &b)
+	// ignoring diagnostics here as it will require communicator from the
+	// struct
 
 	pg := &ProvisionerGroup{}
 	pg.CommunicatorRef = communicatorRefFromString(b.Communicator)

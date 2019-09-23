@@ -50,7 +50,6 @@ build {
     }
 
     provision {
-        communicator = "comm.ssh.vagrant"
 
         shell {
             inline = [

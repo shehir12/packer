@@ -191,7 +191,6 @@ func TestParser_ParseFile(t *testing.T) {
 						},
 						ProvisionerGroups: ProvisionerGroups{
 							{
-								CommunicatorRef: CommunicatorRef{"ssh", "vagrant"},
 								Provisioners: []Provisioner{
 									{
 										&hcl.Block{
