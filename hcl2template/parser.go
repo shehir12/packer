@@ -170,9 +170,27 @@ func (p *Parser) ParseFile(f *hcl.File, cfg *PackerConfig) hcl.Diagnostics {
 			cfg.Builds = append(cfg.Builds, build)
 
 		case communicatorLabel:
+			if cfg.Communicators == nil {
+				cfg.Communicators = map[CommunicatorRef]*Communicator{}
+			}
 			communicator, moreDiags := p.decodeCommunicatorConfig(block)
 			diags = append(diags, moreDiags...)
-			cfg.Communicators = append(cfg.Communicators, communicator)
+
+			ref := communicator.Ref()
+
+			if existing := cfg.Communicators[ref]; existing != nil {
+				diags = append(diags, &hcl.Diagnostic{
+					Severity: hcl.DiagError,
+					Summary:  "Duplicate " + communicatorLabel + " block",
+					Detail: fmt.Sprintf("This "+communicatorLabel+" block has the "+
+						"same type and name as a previous block declared "+
+						"at %s. Each "+communicatorLabel+" must have a unique name per type.",
+						existing.HCL2Ref.DeclRange),
+					Subject: &communicator.HCL2Ref.DeclRange,
+				})
+				continue
+			}
+			cfg.Communicators[ref] = communicator
 
 		default:
 			panic(fmt.Sprintf("unexpected block type %q", block.Type)) // TODO(azr): err

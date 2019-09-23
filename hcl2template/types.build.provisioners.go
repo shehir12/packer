@@ -6,7 +6,7 @@ import (
 )
 
 type ProvisionerGroup struct {
-	Communicator hcl.Expression
+	CommunicatorRef CommunicatorRef
 
 	Provisioners []Provisioner
 	HCL2Ref      HCL2Ref
@@ -25,17 +25,24 @@ var provisionerGroupSchema = hcl.BodySchema{
 
 type ProvisionerGroups []*ProvisionerGroup
 
+func (pgs ProvisionerGroups) FirstCommunicatorRef() CommunicatorRef {
+	if len(pgs) == 0 {
+		return NoCommunicator
+	}
+	return pgs[0].CommunicatorRef
+}
+
 func (p *Parser) decodeProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hcl.Diagnostics) {
 
 	var b struct {
-		Communicator hcl.Expression `hcl:"communicator"`
-		Remain       hcl.Body       `hcl:",remain"`
+		Communicator string   `hcl:"communicator"`
+		Remain       hcl.Body `hcl:",remain"`
 	}
 
 	diags := gohcl.DecodeBody(block.Body, nil, &b)
 
 	pg := &ProvisionerGroup{}
-	pg.Communicator = b.Communicator
+	pg.CommunicatorRef = communicatorRefFromString(b.Communicator)
 	pg.HCL2Ref.DeclRange = block.DefRange
 	pg.HCL2Ref.Remain = b.Remain
 
@@ -55,21 +62,23 @@ func (p *Parser) decodeProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hc
 }
 
 var postProvisionerGroupSchema = hcl.BodySchema{
-	Blocks:     []hcl.BlockHeaderSchema{},
-	Attributes: []hcl.AttributeSchema{},
+	Blocks: []hcl.BlockHeaderSchema{},
+	Attributes: []hcl.AttributeSchema{
+		{"communicator", false},
+	},
 }
 
 func (p *Parser) decodePostProvisionerGroup(block *hcl.Block) (*ProvisionerGroup, hcl.Diagnostics) {
 
 	var b struct {
-		Communicator hcl.Expression `hcl:"communicator"`
-		Remain       hcl.Body       `hcl:",remain"`
+		Communicator string
+		Remain       hcl.Body `hcl:",remain"`
 	}
 
 	diags := gohcl.DecodeBody(block.Body, nil, &b)
 
 	pg := &ProvisionerGroup{}
-	pg.Communicator = b.Communicator
+	pg.CommunicatorRef = communicatorRefFromString(b.Communicator)
 	pg.HCL2Ref.DeclRange = block.DefRange
 	pg.HCL2Ref.Remain = b.Remain
 

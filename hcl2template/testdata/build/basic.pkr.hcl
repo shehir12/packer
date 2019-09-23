@@ -11,7 +11,7 @@ build {
     }
 
     provision {
-        communicator = comm.ssh.vagrant
+        communicator = "comm.ssh.vagrant"
 
         shell {
             inline = [
@@ -50,7 +50,7 @@ build {
     }
 
     provision {
-        communicator = comm.ssh.vagrant
+        communicator = "comm.ssh.vagrant"
 
         shell {
             inline = [

@@ -1,6 +1,8 @@
 package hcl2template
 
 import (
+	"strings"
+
 	"github.com/hashicorp/hcl2/hcl"
 	"github.com/hashicorp/hcl2/hcl/hclsyntax"
 )
@@ -12,6 +14,13 @@ type Communicator struct {
 	Name string
 
 	HCL2Ref HCL2Ref
+}
+
+func (communicator *Communicator) Ref() CommunicatorRef {
+	return CommunicatorRef{
+		Type: communicator.Type,
+		Name: communicator.Name,
+	}
 }
 
 func (p *Parser) decodeCommunicatorConfig(block *hcl.Block) (*Communicator, hcl.Diagnostics) {
@@ -34,4 +43,28 @@ func (p *Parser) decodeCommunicatorConfig(block *hcl.Block) (*Communicator, hcl.
 	}
 
 	return output, diags
+}
+
+type CommunicatorRef struct {
+	Type string
+	Name string
+}
+
+// NoCommunicator is the zero value of CommunicatorRef, representing the
+// absense of Communicator.
+var NoCommunicator CommunicatorRef
+
+func communicatorRefFromString(in string) CommunicatorRef {
+	args := strings.Split(in, ".")
+	if len(args) < 2 {
+		return NoCommunicator
+	}
+	if len(args) > 2 {
+		// comm.type.name
+		args = args[1:]
+	}
+	return CommunicatorRef{
+		Type: args[0],
+		Name: args[1],
+	}
 }

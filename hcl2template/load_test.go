@@ -74,8 +74,8 @@ func TestParser_ParseFile(t *testing.T) {
 			defaultParser,
 			args{"testdata/communicator/basic.pkr.hcl", new(PackerConfig)},
 			&PackerConfig{
-				Communicators: []*Communicator{
-					{Type: "ssh", Name: "vagrant"},
+				Communicators: map[CommunicatorRef]*Communicator{
+					{Type: "ssh", Name: "vagrant"}: {Type: "ssh", Name: "vagrant"},
 				},
 			},
 			false,
@@ -150,6 +150,7 @@ func TestParser_ParseFile(t *testing.T) {
 						},
 						ProvisionerGroups: ProvisionerGroups{
 							&ProvisionerGroup{
+								CommunicatorRef: CommunicatorRef{"ssh", "vagrant"},
 								Provisioners: []Provisioner{
 									{
 										&hcl.Block{
@@ -190,6 +191,7 @@ func TestParser_ParseFile(t *testing.T) {
 						},
 						ProvisionerGroups: ProvisionerGroups{
 							{
+								CommunicatorRef: CommunicatorRef{"ssh", "vagrant"},
 								Provisioners: []Provisioner{
 									{
 										&hcl.Block{

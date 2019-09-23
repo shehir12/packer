@@ -60,8 +60,8 @@ func TestParser_Parse(t *testing.T) {
 						Name: "that-ubuntu-1.0",
 					},
 				},
-				Communicators: []*Communicator{
-					{Type: "ssh", Name: "vagrant"},
+				Communicators: map[CommunicatorRef]*Communicator{
+					{Type: "ssh", Name: "vagrant"}: {Type: "ssh", Name: "vagrant"},
 				},
 				Variables: PackerV1Variables{
 					"image_name": "foo-image-{{user `my_secret`}}",
@@ -80,6 +80,7 @@ func TestParser_Parse(t *testing.T) {
 						},
 						ProvisionerGroups: ProvisionerGroups{
 							&ProvisionerGroup{
+								CommunicatorRef: CommunicatorRef{"ssh", "vagrant"},
 								Provisioners: []Provisioner{
 									{
 										&hcl.Block{
@@ -120,6 +121,7 @@ func TestParser_Parse(t *testing.T) {
 						},
 						ProvisionerGroups: ProvisionerGroups{
 							{
+								CommunicatorRef: CommunicatorRef{"ssh", "vagrant"},
 								Provisioners: []Provisioner{
 									{
 										&hcl.Block{

@@ -13,7 +13,7 @@ type PackerConfig struct {
 
 	Builds Builds
 
-	Communicators []*Communicator
+	Communicators map[CommunicatorRef]*Communicator
 }
 
 type PackerV1Build struct {
@@ -27,6 +27,8 @@ func (pkrCfg *PackerConfig) ToV1Build() PackerV1Build {
 	res := PackerV1Build{}
 
 	for _, build := range pkrCfg.Builds {
+		communicator, _ := pkrCfg.Communicators[build.ProvisionerGroups.FirstCommunicatorRef()]
+
 		for _, from := range build.Froms {
 			source, found := pkrCfg.Sources[from.Src]
 			if !found {
@@ -41,6 +43,7 @@ func (pkrCfg *PackerConfig) ToV1Build() PackerV1Build {
 			}
 
 			_ = source
+			_ = communicator
 
 			// for _, provisionerGroup := range build.ProvisionerGroups {
 			// 	for _, provisioner := range provisionerGroup {
