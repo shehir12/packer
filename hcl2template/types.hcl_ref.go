@@ -1,6 +1,8 @@
 package hcl2template
 
-import "github.com/hashicorp/hcl2/hcl"
+import (
+	"github.com/hashicorp/hcl2/hcl"
+)
 
 // reference to the source definition in configuration text file
 type HCL2Ref struct {
@@ -10,3 +12,9 @@ type HCL2Ref struct {
 	// remainder of unparsed body
 	Remain hcl.Body
 }
+
+// func (hr *HCL2Ref) Blah() {
+// 	// hr.Remain.
+// 	ctyjson.Marshal(nil, nil)
+// 	hr.DeclRange.
+// }

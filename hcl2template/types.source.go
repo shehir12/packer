@@ -16,6 +16,8 @@ type Source struct {
 	// Given name; if any
 	Name string
 
+	V map[string]interface{}
+
 	HCL2Ref HCL2Ref
 }
 
@@ -25,10 +27,7 @@ func (source *Source) decodeConfig(block *hcl.Block) hcl.Diagnostics {
 	source.Name = block.Labels[1]
 	source.HCL2Ref.DeclRange = block.DefRange
 
-	var b struct {
-		Remain hcl.Body `hcl:",remain"`
-	}
-	diags := gohcl.DecodeBody(block.Body, nil, &b)
+	diags := gohcl.DecodeBody(block.Body, nil, &source.V)
 
 	if !hclsyntax.ValidIdentifier(source.Type) {
 		diags = append(diags, &hcl.Diagnostic{
@@ -39,21 +38,6 @@ func (source *Source) decodeConfig(block *hcl.Block) hcl.Diagnostics {
 			Subject: &block.LabelRanges[0],
 		})
 	}
-
-	//
-	// TODO(azr): validate this later on; after interpolating pkr v1 variables
-	// ? or simply use HCL type variables ?
-	//
-	// if !hclsyntax.ValidIdentifier(source.Name) {
-	//  diags = append(diags, &hcl.Diagnostic{
-	//      Severity: hcl.DiagError,
-	//      Summary:  "Invalid source name",
-	//      Detail:   "A " + sourceLabel + " name must start with a letter and may contain only letters, digits, underscores, and dashes.",
-	//      Subject:  &block.LabelRanges[1],
-	//  })
-	// }
-
-	source.HCL2Ref.Remain = b.Remain
 
 	return diags
 }
