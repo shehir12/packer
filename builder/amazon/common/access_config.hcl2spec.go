@@ -73,10 +73,11 @@ func (*AccessConfig) HCL2Schema() map[string]hcl2template.Schema {
 			Description: "Auto generated field",
 		},
 		"VaultAWSEngine": {
-			Type:        hcl2template.TypeString,
+			Type:        hcl2template.TypeBlock,
 			Required:    false,
 			Optional:    true,
 			Description: "Auto generated field",
+			Elem:        (*VaultAWSEngineOptions).HCL2Schema(nil),
 		},
 	}
 	return s

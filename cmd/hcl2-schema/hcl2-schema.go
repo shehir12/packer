@@ -104,8 +104,8 @@ func main() {
 					if strings.Contains(fieldType, "func") {
 						continue
 					}
-					fd.Type = "hcl2template.TypeString"
-					// fd.Type = "?????"
+					fd.Type = "hcl2template.TypeBlock"
+					fd.Elem = "(*" + fieldType + ").HCL2Schema(nil)"
 				}
 
 				sd.Fields = append(sd.Fields, fd)
@@ -139,6 +139,7 @@ type Output struct {
 type FieldDef struct {
 	Name string
 	Type string
+	Elem string // this is used for sub block; this will usually be another schema
 }
 
 type StructDef struct {
@@ -164,6 +165,9 @@ func (*{{ .StructName }}) HCL2Schema() map[string]hcl2template.Schema {
 			Required:    false,
 			Optional:    true,
 			Description: "Auto generated field",
+			{{- if ne .Elem "" }}
+			Elem:        {{ .Elem }},
+			{{- end }}
 		},
 		{{- end }}
 	}

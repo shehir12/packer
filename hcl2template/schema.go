@@ -13,4 +13,5 @@ const (
 	TypeList    = schema.TypeList
 	TypeMap     = schema.TypeMap
 	TypeSet     = schema.TypeSet
+	TypeBlock
 )
