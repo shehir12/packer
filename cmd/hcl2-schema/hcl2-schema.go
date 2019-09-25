@@ -105,7 +105,7 @@ func main() {
 						continue
 					}
 					fd.Type = "hcl2template.TypeString"
-					fd.Type = "?????"
+					// fd.Type = "?????"
 				}
 
 				sd.Fields = append(sd.Fields, fd)
@@ -157,7 +157,7 @@ package {{ .Package }}
 import "github.com/hashicorp/packer/hcl2template"
 {{ range .StructDefs }}
 func (*{{ .StructName }}) HCL2Schema() map[string]hcl2template.Schema {
-	return map[string]hcl2template.Schema{
+	s := map[string]hcl2template.Schema{
 		{{- range .Fields}}
 		"{{ .Name }}": {
 			Type:        {{ .Type }},
@@ -167,6 +167,7 @@ func (*{{ .StructName }}) HCL2Schema() map[string]hcl2template.Schema {
 		},
 		{{- end }}
 	}
+	return s
 }
 {{end}}
 `))

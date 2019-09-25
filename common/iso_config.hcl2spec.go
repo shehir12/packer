@@ -5,7 +5,7 @@ package common
 import "github.com/hashicorp/packer/hcl2template"
 
 func (*ISOConfig) HCL2Schema() map[string]hcl2template.Schema {
-	return map[string]hcl2template.Schema{
+	s := map[string]hcl2template.Schema{
 		"ISOChecksum": {
 			Type:        hcl2template.TypeString,
 			Required:    false,
@@ -49,5 +49,6 @@ func (*ISOConfig) HCL2Schema() map[string]hcl2template.Schema {
 			Description: "Auto generated field",
 		},
 	}
+	return s
 }
 

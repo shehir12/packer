@@ -5,7 +5,7 @@ package common
 import "github.com/hashicorp/packer/hcl2template"
 
 func (*AccessConfig) HCL2Schema() map[string]hcl2template.Schema {
-	return map[string]hcl2template.Schema{
+	s := map[string]hcl2template.Schema{
 		"AccessKey": {
 			Type:        hcl2template.TypeString,
 			Required:    false,
@@ -73,11 +73,42 @@ func (*AccessConfig) HCL2Schema() map[string]hcl2template.Schema {
 			Description: "Auto generated field",
 		},
 		"VaultAWSEngine": {
-			Type:        ?????,
+			Type:        hcl2template.TypeString,
 			Required:    false,
 			Optional:    true,
 			Description: "Auto generated field",
 		},
 	}
+	return s
+}
+
+func (*VaultAWSEngineOptions) HCL2Schema() map[string]hcl2template.Schema {
+	s := map[string]hcl2template.Schema{
+		"Name": {
+			Type:        hcl2template.TypeString,
+			Required:    false,
+			Optional:    true,
+			Description: "Auto generated field",
+		},
+		"RoleARN": {
+			Type:        hcl2template.TypeString,
+			Required:    false,
+			Optional:    true,
+			Description: "Auto generated field",
+		},
+		"TTL": {
+			Type:        hcl2template.TypeString,
+			Required:    false,
+			Optional:    true,
+			Description: "Auto generated field",
+		},
+		"EngineName": {
+			Type:        hcl2template.TypeString,
+			Required:    false,
+			Optional:    true,
+			Description: "Auto generated field",
+		},
+	}
+	return s
 }
 

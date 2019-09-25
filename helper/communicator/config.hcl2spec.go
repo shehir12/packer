@@ -5,7 +5,7 @@ package communicator
 import "github.com/hashicorp/packer/hcl2template"
 
 func (*SSH) HCL2Schema() map[string]hcl2template.Schema {
-	return map[string]hcl2template.Schema{
+	s := map[string]hcl2template.Schema{
 		"SSHHost": {
 			Type:        hcl2template.TypeString,
 			Required:    false,
@@ -175,10 +175,11 @@ func (*SSH) HCL2Schema() map[string]hcl2template.Schema {
 			Description: "Auto generated field",
 		},
 	}
+	return s
 }
 
 func (*WinRM) HCL2Schema() map[string]hcl2template.Schema {
-	return map[string]hcl2template.Schema{
+	s := map[string]hcl2template.Schema{
 		"WinRMUser": {
 			Type:        hcl2template.TypeString,
 			Required:    false,
@@ -228,5 +229,6 @@ func (*WinRM) HCL2Schema() map[string]hcl2template.Schema {
 			Description: "Auto generated field",
 		},
 	}
+	return s
 }
 

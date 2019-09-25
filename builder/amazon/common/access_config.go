@@ -1,5 +1,5 @@
 //go:generate struct-markdown
-//go:generate hcl2-schema -type AccessConfig
+//go:generate hcl2-schema -type AccessConfig,VaultAWSEngineOptions
 
 package common
 
