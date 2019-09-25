@@ -11,6 +11,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"unicode"
 )
 
 var (
@@ -83,7 +84,8 @@ func main() {
 			sd := StructDef{StructName: t}
 			fields := structDecl.Fields.List
 			for _, field := range fields {
-				if len(field.Names) == 0 {
+				if len(field.Names) == 0 ||
+					!unicode.IsUpper([]rune(field.Names[0].Name)[0]) {
 					continue
 				}
 				fd := FieldDef{Name: field.Names[0].Name}
