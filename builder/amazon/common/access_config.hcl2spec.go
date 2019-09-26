@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AccessConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*AccessConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AccessKey": &hcldec.AttrSpec{Name:"AccessKey", Type:cty.String, Required:false},
 		"CustomEndpointEc2": &hcldec.AttrSpec{Name:"CustomEndpointEc2", Type:cty.String, Required:false},
@@ -25,7 +25,7 @@ func (*AccessConfig) HCL2Schema() hcldec.ObjectSpec {
 	return hcldec.ObjectSpec(s)
 }
 
-func (*VaultAWSEngineOptions) HCL2Schema() hcldec.ObjectSpec {
+func (*VaultAWSEngineOptions) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"Name": &hcldec.AttrSpec{Name:"Name", Type:cty.String, Required:false},
 		"RoleARN": &hcldec.AttrSpec{Name:"RoleARN", Type:cty.String, Required:false},
@@ -34,4 +34,3 @@ func (*VaultAWSEngineOptions) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

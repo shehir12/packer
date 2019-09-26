@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AlicloudAccessConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*AlicloudAccessConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AlicloudAccessKey": &hcldec.AttrSpec{Name:"AlicloudAccessKey", Type:cty.String, Required:false},
 		"AlicloudSecretKey": &hcldec.AttrSpec{Name:"AlicloudSecretKey", Type:cty.String, Required:false},
@@ -17,4 +17,3 @@ func (*AlicloudAccessConfig) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

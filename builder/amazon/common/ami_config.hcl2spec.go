@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AMIConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*AMIConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AMIName": &hcldec.AttrSpec{Name:"AMIName", Type:cty.String, Required:false},
 		"AMIDescription": &hcldec.AttrSpec{Name:"AMIDescription", Type:cty.String, Required:false},
@@ -32,4 +32,3 @@ func (*AMIConfig) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

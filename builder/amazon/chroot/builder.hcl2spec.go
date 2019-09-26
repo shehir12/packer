@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*Config) HCL2Schema() hcldec.ObjectSpec {
+func (*Config) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AMIMappings": nil,
 		"ChrootMounts": nil,
@@ -31,4 +31,3 @@ func (*Config) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

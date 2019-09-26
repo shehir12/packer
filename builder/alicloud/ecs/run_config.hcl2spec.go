@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*RunConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*RunConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AssociatePublicIpAddress": &hcldec.AttrSpec{Name:"AssociatePublicIpAddress", Type:cty.Bool, Required:false},
 		"ZoneId": &hcldec.AttrSpec{Name:"ZoneId", Type:cty.String, Required:false},
@@ -35,4 +35,3 @@ func (*RunConfig) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

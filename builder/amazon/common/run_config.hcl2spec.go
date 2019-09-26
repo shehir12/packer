@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*RunConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*RunConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"AssociatePublicIpAddress": &hcldec.AttrSpec{Name:"AssociatePublicIpAddress", Type:cty.Bool, Required:false},
 		"AvailabilityZone": &hcldec.AttrSpec{Name:"AvailabilityZone", Type:cty.String, Required:false},
@@ -43,7 +43,7 @@ func (*RunConfig) HCL2Schema() hcldec.ObjectSpec {
 	return hcldec.ObjectSpec(s)
 }
 
-func (*AmiFilterOptions) HCL2Schema() hcldec.ObjectSpec {
+func (*AmiFilterOptions) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"Filters": nil,
 		"Owners": nil,
@@ -51,4 +51,3 @@ func (*AmiFilterOptions) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

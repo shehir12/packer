@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*BlockDevice) HCL2Schema() hcldec.ObjectSpec {
+func (*BlockDevice) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"DeleteOnTermination": &hcldec.AttrSpec{Name:"DeleteOnTermination", Type:cty.Bool, Required:false},
 		"DeviceName": &hcldec.AttrSpec{Name:"DeviceName", Type:cty.String, Required:false},
@@ -22,4 +22,3 @@ func (*BlockDevice) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

@@ -140,6 +140,9 @@ func main() {
 			res = append(res, sd)
 		}
 	}
+	if len(res) == 0 {
+		return
+	}
 
 	outputFile, err := os.Create(outputPath)
 	if err != nil {
@@ -183,7 +186,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 {{ range .StructDefs }}
-func (*{{ .StructName }}) HCL2Schema() hcldec.ObjectSpec {
+func (*{{ .StructName }}) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		{{- range .Fields}}
 		"{{ .Name }}": {{ .Spec }},
@@ -191,5 +194,4 @@ func (*{{ .StructName }}) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-{{end}}
-`))
+{{end}}`))

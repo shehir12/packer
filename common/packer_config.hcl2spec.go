@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*PackerConfig) HCL2Schema() hcldec.ObjectSpec {
+func (*PackerConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"PackerBuildName": &hcldec.AttrSpec{Name:"PackerBuildName", Type:cty.String, Required:false},
 		"PackerBuilderType": &hcldec.AttrSpec{Name:"PackerBuilderType", Type:cty.String, Required:false},
@@ -19,4 +19,3 @@ func (*PackerConfig) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-

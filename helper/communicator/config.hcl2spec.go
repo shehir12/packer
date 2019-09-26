@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*Config) HCL2Schema() hcldec.ObjectSpec {
+func (*Config) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"Type": &hcldec.AttrSpec{Name:"Type", Type:cty.String, Required:false},
 		"PauseBeforeConnect": &hcldec.AttrSpec{Name:"PauseBeforeConnect", Type:cty.String, Required:false},
@@ -15,7 +15,7 @@ func (*Config) HCL2Schema() hcldec.ObjectSpec {
 	return hcldec.ObjectSpec(s)
 }
 
-func (*SSH) HCL2Schema() hcldec.ObjectSpec {
+func (*SSH) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"SSHHost": &hcldec.AttrSpec{Name:"SSHHost", Type:cty.String, Required:false},
 		"SSHPort": &hcldec.AttrSpec{Name:"SSHPort", Type:cty.Number, Required:false},
@@ -51,7 +51,7 @@ func (*SSH) HCL2Schema() hcldec.ObjectSpec {
 	return hcldec.ObjectSpec(s)
 }
 
-func (*WinRM) HCL2Schema() hcldec.ObjectSpec {
+func (*WinRM) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"WinRMUser": &hcldec.AttrSpec{Name:"WinRMUser", Type:cty.String, Required:false},
 		"WinRMPassword": &hcldec.AttrSpec{Name:"WinRMPassword", Type:cty.String, Required:false},
@@ -64,4 +64,3 @@ func (*WinRM) HCL2Schema() hcldec.ObjectSpec {
 	}
 	return hcldec.ObjectSpec(s)
 }
-
