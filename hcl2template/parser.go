@@ -1,6 +1,7 @@
 package hcl2template
 
 import (
+	"github.com/hashicorp/hcl2/hcldec"
 	"fmt"
 	"io/ioutil"
 	"path/filepath"
@@ -34,6 +35,8 @@ type Parser struct {
 
 	// List of possible post-provisioners names.
 	PostProvisionersSchema *hcl.BodySchema
+
+	CommunicatorSchemas map[string]hcldec.Spec 
 }
 
 func NewParser(provisioners, postProvisioners map[string]string) *Parser {

@@ -3,7 +3,6 @@ package hcl2template
 import (
 	"fmt"
 
-	"github.com/hashicorp/hcl2/gohcl"
 	"github.com/hashicorp/hcl2/hcl"
 	"github.com/hashicorp/hcl2/hcl/hclsyntax"
 )
@@ -16,7 +15,7 @@ type Source struct {
 	// Given name; if any
 	Name string
 
-	V map[string]interface{}
+	// V map[string]interface{}
 
 	HCL2Ref HCL2Ref
 }
@@ -27,7 +26,8 @@ func (source *Source) decodeConfig(block *hcl.Block) hcl.Diagnostics {
 	source.Name = block.Labels[1]
 	source.HCL2Ref.DeclRange = block.DefRange
 
-	diags := gohcl.DecodeBody(block.Body, nil, &source.V)
+	// diags := gohcl.DecodeBody(block.Body, nil, &source.V)
+	var diags hcl.Diagnostics
 
 	if !hclsyntax.ValidIdentifier(source.Type) {
 		diags = append(diags, &hcl.Diagnostic{

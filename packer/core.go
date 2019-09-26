@@ -9,7 +9,6 @@ import (
 
 	multierror "github.com/hashicorp/go-multierror"
 	version "github.com/hashicorp/go-version"
-	"github.com/hashicorp/packer/hcl2template"
 	"github.com/hashicorp/packer/template"
 	"github.com/hashicorp/packer/template/interpolate"
 )
@@ -32,7 +31,7 @@ type Core struct {
 // CoreConfig is the structure for initializing a new Core. Once a CoreConfig
 // is used to initialize a Core, it shouldn't be re-used or modified again.
 type CoreConfig struct {
-	Parser             *hcl2template.Parser
+	// Parser             *hcl2template.Parser
 	Components         ComponentFinder
 	Template           *template.Template
 	Variables          map[string]string

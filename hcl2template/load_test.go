@@ -6,7 +6,9 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/hashicorp/hcl2/hcl"
+	"github.com/hashicorp/hcl2/hcldec"
 	"github.com/hashicorp/hcl2/hclparse"
+	"github.com/hashicorp/packer/helper/communicator"
 )
 
 func getBasicParser() *Parser {
@@ -21,6 +23,9 @@ func getBasicParser() *Parser {
 			Blocks: []hcl.BlockHeaderSchema{
 				{Type: "amazon-import"},
 			}},
+		CommunicatorSchemas: map[string]hcldec.Spec{
+			"ssh": (*communicator.SSH).HCL2Spec(nil),
+		},
 	}
 }
 
