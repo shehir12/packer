@@ -9,21 +9,21 @@ import (
 
 func (*AlicloudDiskDevice) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"DiskName": &hcldec.AttrSpec{Name:"DiskName", Type:cty.String, Required:false},
-		"DiskCategory": &hcldec.AttrSpec{Name:"DiskCategory", Type:cty.String, Required:false},
-		"DiskSize": &hcldec.AttrSpec{Name:"DiskSize", Type:cty.Number, Required:false},
-		"SnapshotId": &hcldec.AttrSpec{Name:"SnapshotId", Type:cty.String, Required:false},
-		"Description": &hcldec.AttrSpec{Name:"Description", Type:cty.String, Required:false},
-		"DeleteWithInstance": &hcldec.AttrSpec{Name:"DeleteWithInstance", Type:cty.Bool, Required:false},
-		"Device": &hcldec.AttrSpec{Name:"Device", Type:cty.String, Required:false},
-		"Encrypted": &hcldec.AttrSpec{Name:"Encrypted", Type:cty.Bool, Required:false},
+		"DiskName":           &hcldec.AttrSpec{Name: "DiskName", Type: cty.String, Required: false},
+		"DiskCategory":       &hcldec.AttrSpec{Name: "DiskCategory", Type: cty.String, Required: false},
+		"DiskSize":           &hcldec.AttrSpec{Name: "DiskSize", Type: cty.Number, Required: false},
+		"SnapshotId":         &hcldec.AttrSpec{Name: "SnapshotId", Type: cty.String, Required: false},
+		"Description":        &hcldec.AttrSpec{Name: "Description", Type: cty.String, Required: false},
+		"DeleteWithInstance": &hcldec.AttrSpec{Name: "DeleteWithInstance", Type: cty.Bool, Required: false},
+		"Device":             &hcldec.AttrSpec{Name: "Device", Type: cty.String, Required: false},
+		"Encrypted":          &hcldec.AttrSpec{Name: "Encrypted", Type: cty.Bool, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }
 
 func (*AlicloudDiskDevices) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"ECSSystemDiskMapping": nil,
+		"ECSSystemDiskMapping":  nil,
 		"ECSImagesDiskMappings": nil,
 	}
 	return hcldec.ObjectSpec(s)

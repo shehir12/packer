@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"go/ast"
+	"go/format"
 	"go/parser"
 	"go/token"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -144,15 +147,28 @@ func main() {
 		return
 	}
 
-	outputFile, err := os.Create(outputPath)
-	if err != nil {
-		panic(err)
-	}
-	defer outputFile.Close()
-	err = structDocsTemplate.Execute(outputFile, Output{
+	var output bytes.Buffer
+
+	err = structDocsTemplate.Execute(&output, Output{
 		Package:    f.Name.String(),
 		StructDefs: res,
 	})
+	if err != nil {
+		log.Fatalf("err: %v", err)
+	}
+
+	outputFile, err := os.Create(outputPath)
+	if err != nil {
+		log.Fatalf("err: %v", err)
+	}
+	defer outputFile.Close()
+
+	formattedBytes, err := format.Source(output.Bytes())
+	if err != nil {
+		log.Fatalf("err: %v", err)
+	}
+
+	_, err = io.Copy(outputFile, bytes.NewBuffer(formattedBytes))
 	if err != nil {
 		log.Fatalf("err: %v", err)
 	}

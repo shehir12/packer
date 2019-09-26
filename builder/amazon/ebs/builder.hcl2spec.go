@@ -9,9 +9,9 @@ import (
 
 func (*Config) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"AMIMappings": nil,
+		"AMIMappings":    nil,
 		"LaunchMappings": nil,
-		"VolumeRunTags": nil,
+		"VolumeRunTags":  nil,
 	}
 	return hcldec.ObjectSpec(s)
 }

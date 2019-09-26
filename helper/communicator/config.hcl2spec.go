@@ -9,58 +9,58 @@ import (
 
 func (*Config) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"Type": &hcldec.AttrSpec{Name:"Type", Type:cty.String, Required:false},
-		"PauseBeforeConnect": &hcldec.AttrSpec{Name:"PauseBeforeConnect", Type:cty.String, Required:false},
+		"Type":               &hcldec.AttrSpec{Name: "Type", Type: cty.String, Required: false},
+		"PauseBeforeConnect": &hcldec.AttrSpec{Name: "PauseBeforeConnect", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }
 
 func (*SSH) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"SSHHost": &hcldec.AttrSpec{Name:"SSHHost", Type:cty.String, Required:false},
-		"SSHPort": &hcldec.AttrSpec{Name:"SSHPort", Type:cty.Number, Required:false},
-		"SSHUsername": &hcldec.AttrSpec{Name:"SSHUsername", Type:cty.String, Required:false},
-		"SSHPassword": &hcldec.AttrSpec{Name:"SSHPassword", Type:cty.String, Required:false},
-		"SSHKeyPairName": &hcldec.AttrSpec{Name:"SSHKeyPairName", Type:cty.String, Required:false},
-		"SSHTemporaryKeyPairName": &hcldec.AttrSpec{Name:"SSHTemporaryKeyPairName", Type:cty.String, Required:false},
-		"SSHClearAuthorizedKeys": &hcldec.AttrSpec{Name:"SSHClearAuthorizedKeys", Type:cty.Bool, Required:false},
-		"SSHPrivateKeyFile": &hcldec.AttrSpec{Name:"SSHPrivateKeyFile", Type:cty.String, Required:false},
-		"SSHPty": &hcldec.AttrSpec{Name:"SSHPty", Type:cty.Bool, Required:false},
-		"SSHTimeout": &hcldec.AttrSpec{Name:"SSHTimeout", Type:cty.String, Required:false},
-		"SSHAgentAuth": &hcldec.AttrSpec{Name:"SSHAgentAuth", Type:cty.Bool, Required:false},
-		"SSHDisableAgentForwarding": &hcldec.AttrSpec{Name:"SSHDisableAgentForwarding", Type:cty.Bool, Required:false},
-		"SSHHandshakeAttempts": &hcldec.AttrSpec{Name:"SSHHandshakeAttempts", Type:cty.Number, Required:false},
-		"SSHBastionHost": &hcldec.AttrSpec{Name:"SSHBastionHost", Type:cty.String, Required:false},
-		"SSHBastionPort": &hcldec.AttrSpec{Name:"SSHBastionPort", Type:cty.Number, Required:false},
-		"SSHBastionAgentAuth": &hcldec.AttrSpec{Name:"SSHBastionAgentAuth", Type:cty.Bool, Required:false},
-		"SSHBastionUsername": &hcldec.AttrSpec{Name:"SSHBastionUsername", Type:cty.String, Required:false},
-		"SSHBastionPassword": &hcldec.AttrSpec{Name:"SSHBastionPassword", Type:cty.String, Required:false},
-		"SSHBastionPrivateKeyFile": &hcldec.AttrSpec{Name:"SSHBastionPrivateKeyFile", Type:cty.String, Required:false},
-		"SSHFileTransferMethod": &hcldec.AttrSpec{Name:"SSHFileTransferMethod", Type:cty.String, Required:false},
-		"SSHProxyHost": &hcldec.AttrSpec{Name:"SSHProxyHost", Type:cty.String, Required:false},
-		"SSHProxyPort": &hcldec.AttrSpec{Name:"SSHProxyPort", Type:cty.Number, Required:false},
-		"SSHProxyUsername": &hcldec.AttrSpec{Name:"SSHProxyUsername", Type:cty.String, Required:false},
-		"SSHProxyPassword": &hcldec.AttrSpec{Name:"SSHProxyPassword", Type:cty.String, Required:false},
-		"SSHKeepAliveInterval": &hcldec.AttrSpec{Name:"SSHKeepAliveInterval", Type:cty.String, Required:false},
-		"SSHReadWriteTimeout": &hcldec.AttrSpec{Name:"SSHReadWriteTimeout", Type:cty.String, Required:false},
-		"SSHRemoteTunnels": &hcldec.AttrSpec{Name:"SSHRemoteTunnels", Type:cty.List(cty.String), Required:false},
-		"SSHLocalTunnels": &hcldec.AttrSpec{Name:"SSHLocalTunnels", Type:cty.List(cty.String), Required:false},
-		"SSHPublicKey": &hcldec.AttrSpec{Name:"SSHPublicKey", Type:cty.String, Required:false},
-		"SSHPrivateKey": &hcldec.AttrSpec{Name:"SSHPrivateKey", Type:cty.String, Required:false},
+		"SSHHost":                   &hcldec.AttrSpec{Name: "SSHHost", Type: cty.String, Required: false},
+		"SSHPort":                   &hcldec.AttrSpec{Name: "SSHPort", Type: cty.Number, Required: false},
+		"SSHUsername":               &hcldec.AttrSpec{Name: "SSHUsername", Type: cty.String, Required: false},
+		"SSHPassword":               &hcldec.AttrSpec{Name: "SSHPassword", Type: cty.String, Required: false},
+		"SSHKeyPairName":            &hcldec.AttrSpec{Name: "SSHKeyPairName", Type: cty.String, Required: false},
+		"SSHTemporaryKeyPairName":   &hcldec.AttrSpec{Name: "SSHTemporaryKeyPairName", Type: cty.String, Required: false},
+		"SSHClearAuthorizedKeys":    &hcldec.AttrSpec{Name: "SSHClearAuthorizedKeys", Type: cty.Bool, Required: false},
+		"SSHPrivateKeyFile":         &hcldec.AttrSpec{Name: "SSHPrivateKeyFile", Type: cty.String, Required: false},
+		"SSHPty":                    &hcldec.AttrSpec{Name: "SSHPty", Type: cty.Bool, Required: false},
+		"SSHTimeout":                &hcldec.AttrSpec{Name: "SSHTimeout", Type: cty.String, Required: false},
+		"SSHAgentAuth":              &hcldec.AttrSpec{Name: "SSHAgentAuth", Type: cty.Bool, Required: false},
+		"SSHDisableAgentForwarding": &hcldec.AttrSpec{Name: "SSHDisableAgentForwarding", Type: cty.Bool, Required: false},
+		"SSHHandshakeAttempts":      &hcldec.AttrSpec{Name: "SSHHandshakeAttempts", Type: cty.Number, Required: false},
+		"SSHBastionHost":            &hcldec.AttrSpec{Name: "SSHBastionHost", Type: cty.String, Required: false},
+		"SSHBastionPort":            &hcldec.AttrSpec{Name: "SSHBastionPort", Type: cty.Number, Required: false},
+		"SSHBastionAgentAuth":       &hcldec.AttrSpec{Name: "SSHBastionAgentAuth", Type: cty.Bool, Required: false},
+		"SSHBastionUsername":        &hcldec.AttrSpec{Name: "SSHBastionUsername", Type: cty.String, Required: false},
+		"SSHBastionPassword":        &hcldec.AttrSpec{Name: "SSHBastionPassword", Type: cty.String, Required: false},
+		"SSHBastionPrivateKeyFile":  &hcldec.AttrSpec{Name: "SSHBastionPrivateKeyFile", Type: cty.String, Required: false},
+		"SSHFileTransferMethod":     &hcldec.AttrSpec{Name: "SSHFileTransferMethod", Type: cty.String, Required: false},
+		"SSHProxyHost":              &hcldec.AttrSpec{Name: "SSHProxyHost", Type: cty.String, Required: false},
+		"SSHProxyPort":              &hcldec.AttrSpec{Name: "SSHProxyPort", Type: cty.Number, Required: false},
+		"SSHProxyUsername":          &hcldec.AttrSpec{Name: "SSHProxyUsername", Type: cty.String, Required: false},
+		"SSHProxyPassword":          &hcldec.AttrSpec{Name: "SSHProxyPassword", Type: cty.String, Required: false},
+		"SSHKeepAliveInterval":      &hcldec.AttrSpec{Name: "SSHKeepAliveInterval", Type: cty.String, Required: false},
+		"SSHReadWriteTimeout":       &hcldec.AttrSpec{Name: "SSHReadWriteTimeout", Type: cty.String, Required: false},
+		"SSHRemoteTunnels":          &hcldec.AttrSpec{Name: "SSHRemoteTunnels", Type: cty.List(cty.String), Required: false},
+		"SSHLocalTunnels":           &hcldec.AttrSpec{Name: "SSHLocalTunnels", Type: cty.List(cty.String), Required: false},
+		"SSHPublicKey":              &hcldec.AttrSpec{Name: "SSHPublicKey", Type: cty.String, Required: false},
+		"SSHPrivateKey":             &hcldec.AttrSpec{Name: "SSHPrivateKey", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }
 
 func (*WinRM) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"WinRMUser": &hcldec.AttrSpec{Name:"WinRMUser", Type:cty.String, Required:false},
-		"WinRMPassword": &hcldec.AttrSpec{Name:"WinRMPassword", Type:cty.String, Required:false},
-		"WinRMHost": &hcldec.AttrSpec{Name:"WinRMHost", Type:cty.String, Required:false},
-		"WinRMPort": &hcldec.AttrSpec{Name:"WinRMPort", Type:cty.Number, Required:false},
-		"WinRMTimeout": &hcldec.AttrSpec{Name:"WinRMTimeout", Type:cty.String, Required:false},
-		"WinRMUseSSL": &hcldec.AttrSpec{Name:"WinRMUseSSL", Type:cty.Bool, Required:false},
-		"WinRMInsecure": &hcldec.AttrSpec{Name:"WinRMInsecure", Type:cty.Bool, Required:false},
-		"WinRMUseNTLM": &hcldec.AttrSpec{Name:"WinRMUseNTLM", Type:cty.Bool, Required:false},
+		"WinRMUser":     &hcldec.AttrSpec{Name: "WinRMUser", Type: cty.String, Required: false},
+		"WinRMPassword": &hcldec.AttrSpec{Name: "WinRMPassword", Type: cty.String, Required: false},
+		"WinRMHost":     &hcldec.AttrSpec{Name: "WinRMHost", Type: cty.String, Required: false},
+		"WinRMPort":     &hcldec.AttrSpec{Name: "WinRMPort", Type: cty.Number, Required: false},
+		"WinRMTimeout":  &hcldec.AttrSpec{Name: "WinRMTimeout", Type: cty.String, Required: false},
+		"WinRMUseSSL":   &hcldec.AttrSpec{Name: "WinRMUseSSL", Type: cty.Bool, Required: false},
+		"WinRMInsecure": &hcldec.AttrSpec{Name: "WinRMInsecure", Type: cty.Bool, Required: false},
+		"WinRMUseNTLM":  &hcldec.AttrSpec{Name: "WinRMUseNTLM", Type: cty.Bool, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }
