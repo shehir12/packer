@@ -43,3 +43,12 @@ func (*RunConfig) HCL2Schema() hcldec.ObjectSpec {
 	return hcldec.ObjectSpec(s)
 }
 
+func (*AmiFilterOptions) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"Filters": nil,
+		"Owners": nil,
+		"MostRecent": &hcldec.AttrSpec{Name:"MostRecent", Type:cty.Bool, Required:false},
+	}
+	return hcldec.ObjectSpec(s)
+}
+

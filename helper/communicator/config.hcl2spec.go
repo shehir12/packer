@@ -7,6 +7,14 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
+func (*Config) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"Type": &hcldec.AttrSpec{Name:"Type", Type:cty.String, Required:false},
+		"PauseBeforeConnect": &hcldec.AttrSpec{Name:"PauseBeforeConnect", Type:cty.String, Required:false},
+	}
+	return hcldec.ObjectSpec(s)
+}
+
 func (*SSH) HCL2Schema() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
 		"SSHHost": &hcldec.AttrSpec{Name:"SSHHost", Type:cty.String, Required:false},

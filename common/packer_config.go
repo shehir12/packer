@@ -1,3 +1,5 @@
+//go:generate hcl2-schema -type PackerConfig
+
 package common
 
 // PackerConfig is a struct that contains the configuration keys that

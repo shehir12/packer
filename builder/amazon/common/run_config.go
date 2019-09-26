@@ -1,5 +1,5 @@
 //go:generate struct-markdown
-//go:generate hcl2-schema -type RunConfig
+//go:generate hcl2-schema -type RunConfig,AmiFilterOptions
 
 package common
 

@@ -1,3 +1,5 @@
+//go:generate hcl2-schema -type Config
+
 // The alicloud  contains a packer.Builder implementation that
 // builds ecs images for alicloud.
 package ecs
