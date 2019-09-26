@@ -2,114 +2,36 @@
 
 package common
 
-import "github.com/hashicorp/packer/hcl2template"
+import (
+	"github.com/hashicorp/hcl2/hcldec"
+	"github.com/zclconf/go-cty/cty"
+)
 
-func (*AccessConfig) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
-		"AccessKey": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"CustomEndpointEc2": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"DecodeAuthZMessages": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"InsecureSkipTLSVerify": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"MFACode": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"ProfileName": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"RawRegion": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SecretKey": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SkipValidation": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SkipMetadataApiCheck": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"Token": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"VaultAWSEngine": {
-			Type:        hcl2template.TypeBlock,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-			Elem:        (*VaultAWSEngineOptions).HCL2Schema(nil),
-		},
+func (*AccessConfig) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"AccessKey": &hcldec.AttrSpec{Name:"AccessKey", Type:cty.String, Required:false},
+		"CustomEndpointEc2": &hcldec.AttrSpec{Name:"CustomEndpointEc2", Type:cty.String, Required:false},
+		"DecodeAuthZMessages": &hcldec.AttrSpec{Name:"DecodeAuthZMessages", Type:cty.Bool, Required:false},
+		"InsecureSkipTLSVerify": &hcldec.AttrSpec{Name:"InsecureSkipTLSVerify", Type:cty.Bool, Required:false},
+		"MFACode": &hcldec.AttrSpec{Name:"MFACode", Type:cty.String, Required:false},
+		"ProfileName": &hcldec.AttrSpec{Name:"ProfileName", Type:cty.String, Required:false},
+		"RawRegion": &hcldec.AttrSpec{Name:"RawRegion", Type:cty.String, Required:false},
+		"SecretKey": &hcldec.AttrSpec{Name:"SecretKey", Type:cty.String, Required:false},
+		"SkipValidation": &hcldec.AttrSpec{Name:"SkipValidation", Type:cty.Bool, Required:false},
+		"SkipMetadataApiCheck": &hcldec.AttrSpec{Name:"SkipMetadataApiCheck", Type:cty.Bool, Required:false},
+		"Token": &hcldec.AttrSpec{Name:"Token", Type:cty.String, Required:false},
+		"VaultAWSEngine": nil,
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 
-func (*VaultAWSEngineOptions) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
-		"Name": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"RoleARN": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"TTL": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"EngineName": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
+func (*VaultAWSEngineOptions) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"Name": &hcldec.AttrSpec{Name:"Name", Type:cty.String, Required:false},
+		"RoleARN": &hcldec.AttrSpec{Name:"RoleARN", Type:cty.String, Required:false},
+		"TTL": &hcldec.AttrSpec{Name:"TTL", Type:cty.String, Required:false},
+		"EngineName": &hcldec.AttrSpec{Name:"EngineName", Type:cty.String, Required:false},
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 

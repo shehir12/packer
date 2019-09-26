@@ -2,53 +2,21 @@
 
 package common
 
-import "github.com/hashicorp/packer/hcl2template"
+import (
+	"github.com/hashicorp/hcl2/hcldec"
+	"github.com/zclconf/go-cty/cty"
+)
 
-func (*ISOConfig) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
-		"ISOChecksum": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"ISOChecksumURL": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"ISOChecksumType": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"RawSingleISOUrl": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"ISOUrls": {
-			Type:        hcl2template.TypeList,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"TargetPath": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"TargetExtension": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
+func (*ISOConfig) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"ISOChecksum": &hcldec.AttrSpec{Name:"ISOChecksum", Type:cty.String, Required:false},
+		"ISOChecksumURL": &hcldec.AttrSpec{Name:"ISOChecksumURL", Type:cty.String, Required:false},
+		"ISOChecksumType": &hcldec.AttrSpec{Name:"ISOChecksumType", Type:cty.String, Required:false},
+		"RawSingleISOUrl": &hcldec.AttrSpec{Name:"RawSingleISOUrl", Type:cty.String, Required:false},
+		"ISOUrls": &hcldec.AttrSpec{Name:"ISOUrls", Type:cty.List(cty.String), Required:false},
+		"TargetPath": &hcldec.AttrSpec{Name:"TargetPath", Type:cty.String, Required:false},
+		"TargetExtension": &hcldec.AttrSpec{Name:"TargetExtension", Type:cty.String, Required:false},
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 

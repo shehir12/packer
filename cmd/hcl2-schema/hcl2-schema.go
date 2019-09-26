@@ -6,12 +6,15 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
-	"html/template"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
+	"text/template"
 	"unicode"
+
+	"github.com/hashicorp/hcl2/hcldec"
+	"github.com/zclconf/go-cty/cty"
 )
 
 var (
@@ -84,28 +87,49 @@ func main() {
 			sd := StructDef{StructName: t}
 			fields := structDecl.Fields.List
 			for _, field := range fields {
-				if len(field.Names) == 0 ||
-					!unicode.IsUpper([]rune(field.Names[0].Name)[0]) {
+				if len(field.Names) == 0 {
 					continue
 				}
-				fd := FieldDef{Name: field.Names[0].Name}
+				fieldName := field.Names[0].Name
 				fieldType := string(b[field.Type.Pos()-1 : field.Type.End()-1])
+				if !unicode.IsUpper([]rune(fieldName)[0]) {
+					continue
+				}
+				fd := FieldDef{Name: fieldName}
 
 				switch fieldType {
-				case "[]byte":
-					continue // for now
 				case "[]string":
-					fd.Type = "hcl2template.TypeList"
-				case "string", "int", "bool":
-					fd.Type = "hcl2template.Type" + strings.Title(fieldType)
-				case "time.Duration":
-					fd.Type = "hcl2template.TypeString"
+					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
+						Name:     fieldName,
+						Type:     cty.List(cty.String),
+						Required: false,
+					})
+				case "[]byte", "string", "time.Duration":
+					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
+						Name:     fieldName,
+						Type:     cty.String,
+						Required: false,
+					})
+					// fd.Type = "hcl2template.Type" + strings.Title(fieldType)
+				case "int", "int32", "float":
+					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
+						Name:     fieldName,
+						Type:     cty.Number,
+						Required: false,
+					})
+				case "bool", "config.Trilean":
+					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
+						Name:     fieldName,
+						Type:     cty.Bool,
+						Required: false,
+					})
 				default:
 					if strings.Contains(fieldType, "func") {
 						continue
 					}
-					fd.Type = "hcl2template.TypeBlock"
-					fd.Elem = "(*" + fieldType + ").HCL2Schema(nil)"
+					fd.Spec = `nil`
+					// fd.Type = "hcl2template.TypeBlock"
+					// fd.Elem = "(*" + fieldType + ").HCL2Schema(nil)"
 				}
 
 				sd.Fields = append(sd.Fields, fd)
@@ -138,8 +162,7 @@ type Output struct {
 
 type FieldDef struct {
 	Name string
-	Type string
-	Elem string // this is used for sub block; this will usually be another schema
+	Spec string
 }
 
 type StructDef struct {
@@ -155,23 +178,18 @@ var structDocsTemplate = template.Must(template.New("structDocsTemplate").
 
 package {{ .Package }}
 
-import "github.com/hashicorp/packer/hcl2template"
+import (
+	"github.com/hashicorp/hcl2/hcldec"
+	"github.com/zclconf/go-cty/cty"
+)
 {{ range .StructDefs }}
-func (*{{ .StructName }}) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
+func (*{{ .StructName }}) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
 		{{- range .Fields}}
-		"{{ .Name }}": {
-			Type:        {{ .Type }},
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-			{{- if ne .Elem "" }}
-			Elem:        {{ .Elem }},
-			{{- end }}
-		},
+		"{{ .Name }}": {{ .Spec }},
 		{{- end }}
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 {{end}}
 `))

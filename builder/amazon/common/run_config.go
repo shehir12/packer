@@ -1,4 +1,5 @@
 //go:generate struct-markdown
+//go:generate hcl2-schema -type RunConfig
 
 package common
 

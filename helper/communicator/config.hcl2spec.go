@@ -2,233 +2,58 @@
 
 package communicator
 
-import "github.com/hashicorp/packer/hcl2template"
+import (
+	"github.com/hashicorp/hcl2/hcldec"
+	"github.com/zclconf/go-cty/cty"
+)
 
-func (*SSH) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
-		"SSHHost": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHPort": {
-			Type:        hcl2template.TypeInt,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHUsername": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHPassword": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHKeyPairName": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHTemporaryKeyPairName": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHClearAuthorizedKeys": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHPrivateKeyFile": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHPty": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHTimeout": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHAgentAuth": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHDisableAgentForwarding": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHHandshakeAttempts": {
-			Type:        hcl2template.TypeInt,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionHost": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionPort": {
-			Type:        hcl2template.TypeInt,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionAgentAuth": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionUsername": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionPassword": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHBastionPrivateKeyFile": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHFileTransferMethod": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHProxyHost": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHProxyPort": {
-			Type:        hcl2template.TypeInt,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHProxyUsername": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHProxyPassword": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHKeepAliveInterval": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHReadWriteTimeout": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHRemoteTunnels": {
-			Type:        hcl2template.TypeList,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"SSHLocalTunnels": {
-			Type:        hcl2template.TypeList,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
+func (*SSH) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"SSHHost": &hcldec.AttrSpec{Name:"SSHHost", Type:cty.String, Required:false},
+		"SSHPort": &hcldec.AttrSpec{Name:"SSHPort", Type:cty.Number, Required:false},
+		"SSHUsername": &hcldec.AttrSpec{Name:"SSHUsername", Type:cty.String, Required:false},
+		"SSHPassword": &hcldec.AttrSpec{Name:"SSHPassword", Type:cty.String, Required:false},
+		"SSHKeyPairName": &hcldec.AttrSpec{Name:"SSHKeyPairName", Type:cty.String, Required:false},
+		"SSHTemporaryKeyPairName": &hcldec.AttrSpec{Name:"SSHTemporaryKeyPairName", Type:cty.String, Required:false},
+		"SSHClearAuthorizedKeys": &hcldec.AttrSpec{Name:"SSHClearAuthorizedKeys", Type:cty.Bool, Required:false},
+		"SSHPrivateKeyFile": &hcldec.AttrSpec{Name:"SSHPrivateKeyFile", Type:cty.String, Required:false},
+		"SSHPty": &hcldec.AttrSpec{Name:"SSHPty", Type:cty.Bool, Required:false},
+		"SSHTimeout": &hcldec.AttrSpec{Name:"SSHTimeout", Type:cty.String, Required:false},
+		"SSHAgentAuth": &hcldec.AttrSpec{Name:"SSHAgentAuth", Type:cty.Bool, Required:false},
+		"SSHDisableAgentForwarding": &hcldec.AttrSpec{Name:"SSHDisableAgentForwarding", Type:cty.Bool, Required:false},
+		"SSHHandshakeAttempts": &hcldec.AttrSpec{Name:"SSHHandshakeAttempts", Type:cty.Number, Required:false},
+		"SSHBastionHost": &hcldec.AttrSpec{Name:"SSHBastionHost", Type:cty.String, Required:false},
+		"SSHBastionPort": &hcldec.AttrSpec{Name:"SSHBastionPort", Type:cty.Number, Required:false},
+		"SSHBastionAgentAuth": &hcldec.AttrSpec{Name:"SSHBastionAgentAuth", Type:cty.Bool, Required:false},
+		"SSHBastionUsername": &hcldec.AttrSpec{Name:"SSHBastionUsername", Type:cty.String, Required:false},
+		"SSHBastionPassword": &hcldec.AttrSpec{Name:"SSHBastionPassword", Type:cty.String, Required:false},
+		"SSHBastionPrivateKeyFile": &hcldec.AttrSpec{Name:"SSHBastionPrivateKeyFile", Type:cty.String, Required:false},
+		"SSHFileTransferMethod": &hcldec.AttrSpec{Name:"SSHFileTransferMethod", Type:cty.String, Required:false},
+		"SSHProxyHost": &hcldec.AttrSpec{Name:"SSHProxyHost", Type:cty.String, Required:false},
+		"SSHProxyPort": &hcldec.AttrSpec{Name:"SSHProxyPort", Type:cty.Number, Required:false},
+		"SSHProxyUsername": &hcldec.AttrSpec{Name:"SSHProxyUsername", Type:cty.String, Required:false},
+		"SSHProxyPassword": &hcldec.AttrSpec{Name:"SSHProxyPassword", Type:cty.String, Required:false},
+		"SSHKeepAliveInterval": &hcldec.AttrSpec{Name:"SSHKeepAliveInterval", Type:cty.String, Required:false},
+		"SSHReadWriteTimeout": &hcldec.AttrSpec{Name:"SSHReadWriteTimeout", Type:cty.String, Required:false},
+		"SSHRemoteTunnels": &hcldec.AttrSpec{Name:"SSHRemoteTunnels", Type:cty.List(cty.String), Required:false},
+		"SSHLocalTunnels": &hcldec.AttrSpec{Name:"SSHLocalTunnels", Type:cty.List(cty.String), Required:false},
+		"SSHPublicKey": &hcldec.AttrSpec{Name:"SSHPublicKey", Type:cty.String, Required:false},
+		"SSHPrivateKey": &hcldec.AttrSpec{Name:"SSHPrivateKey", Type:cty.String, Required:false},
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 
-func (*WinRM) HCL2Schema() map[string]hcl2template.Schema {
-	s := map[string]hcl2template.Schema{
-		"WinRMUser": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMPassword": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMHost": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMPort": {
-			Type:        hcl2template.TypeInt,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMTimeout": {
-			Type:        hcl2template.TypeString,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMUseSSL": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMInsecure": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
-		"WinRMUseNTLM": {
-			Type:        hcl2template.TypeBool,
-			Required:    false,
-			Optional:    true,
-			Description: "Auto generated field",
-		},
+func (*WinRM) HCL2Schema() hcldec.ObjectSpec {
+	s := map[string]hcldec.Spec{
+		"WinRMUser": &hcldec.AttrSpec{Name:"WinRMUser", Type:cty.String, Required:false},
+		"WinRMPassword": &hcldec.AttrSpec{Name:"WinRMPassword", Type:cty.String, Required:false},
+		"WinRMHost": &hcldec.AttrSpec{Name:"WinRMHost", Type:cty.String, Required:false},
+		"WinRMPort": &hcldec.AttrSpec{Name:"WinRMPort", Type:cty.Number, Required:false},
+		"WinRMTimeout": &hcldec.AttrSpec{Name:"WinRMTimeout", Type:cty.String, Required:false},
+		"WinRMUseSSL": &hcldec.AttrSpec{Name:"WinRMUseSSL", Type:cty.Bool, Required:false},
+		"WinRMInsecure": &hcldec.AttrSpec{Name:"WinRMInsecure", Type:cty.Bool, Required:false},
+		"WinRMUseNTLM": &hcldec.AttrSpec{Name:"WinRMUseNTLM", Type:cty.Bool, Required:false},
 	}
-	return s
+	return hcldec.ObjectSpec(s)
 }
 
