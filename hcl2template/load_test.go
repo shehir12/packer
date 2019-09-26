@@ -9,19 +9,23 @@ import (
 	"github.com/hashicorp/hcl2/hclparse"
 )
 
-func TestParser_ParseFile(t *testing.T) {
-	defaultParser := &Parser{
-		hclparse.NewParser(),
-		&hcl.BodySchema{
+func getBasicParser() *Parser {
+	return &Parser{
+		Parser: hclparse.NewParser(),
+		ProvisionersSchema: &hcl.BodySchema{
 			Blocks: []hcl.BlockHeaderSchema{
 				{Type: "shell"},
 				{Type: "upload", LabelNames: []string{"source", "destination"}},
 			}},
-		&hcl.BodySchema{
+		PostProvisionersSchema: &hcl.BodySchema{
 			Blocks: []hcl.BlockHeaderSchema{
 				{Type: "amazon-import"},
 			}},
 	}
+}
+
+func TestParser_ParseFile(t *testing.T) {
+	defaultParser := getBasicParser()
 
 	type fields struct {
 		Parser *hclparse.Parser
