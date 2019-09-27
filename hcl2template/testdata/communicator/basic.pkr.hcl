@@ -17,7 +17,7 @@ communicator "ssh" "vagrant" {
   ssh_port                     = "42"
   ssh_keep_alive_interval      = "10s"
   ssh_private_key_file         = "file.pem"
-  ssh_proxy_host               = "ninja-potatos.com"
+  ssh_proxy_host               = "ninja-potatoes.com"
   ssh_proxy_password           = "pickle-rick"
   ssh_proxy_port               = "42"
   ssh_proxy_username           = "dark-father"
