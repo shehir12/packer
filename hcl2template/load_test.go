@@ -9,6 +9,7 @@ import (
 	"github.com/hashicorp/hcl2/hcldec"
 	"github.com/hashicorp/hcl2/hclparse"
 	"github.com/hashicorp/packer/helper/communicator"
+	"github.com/zclconf/go-cty/cty"
 )
 
 func getBasicParser() *Parser {
@@ -24,7 +25,8 @@ func getBasicParser() *Parser {
 				{Type: "amazon-import"},
 			}},
 		CommunicatorSchemas: map[string]hcldec.Spec{
-			"ssh": (*communicator.SSH).HCL2Spec(nil),
+			"ssh":   (*communicator.SSH).HCL2Spec(nil),
+			"winrm": (*communicator.WinRM).HCL2Spec(nil),
 		},
 	}
 }
@@ -227,6 +229,7 @@ func TestParser_ParseFile(t *testing.T) {
 				t.Errorf("PackerConfig.Load() unexpected diagnostics. %s", diags)
 			}
 			if diff := cmp.Diff(tt.wantPackerConfig, tt.args.cfg,
+				cmpopts.IgnoreUnexported(cty.Value{}),
 				cmpopts.IgnoreTypes(HCL2Ref{}),
 				cmpopts.IgnoreTypes([]hcl.Range{}),
 				cmpopts.IgnoreTypes(hcl.Range{}),

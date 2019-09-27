@@ -16,7 +16,7 @@ func TestParser_Parse(t *testing.T) {
 	}
 	tests := []struct {
 		name      string
-		fields    *Parser
+		parser    *Parser
 		args      args
 		wantCfg   *PackerConfig
 		wantDiags bool
@@ -126,12 +126,7 @@ func TestParser_Parse(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			p := &Parser{
-				Parser:                 tt.fields.Parser,
-				ProvisionersSchema:     tt.fields.ProvisionersSchema,
-				PostProvisionersSchema: tt.fields.PostProvisionersSchema,
-			}
-			gotCfg, gotDiags := p.Parse(tt.args.filename)
+			gotCfg, gotDiags := tt.parser.Parse(tt.args.filename)
 			if tt.wantDiags == (gotDiags == nil) {
 				t.Errorf("Parser.Parse() unexpected diagnostics. %s", gotDiags)
 			}

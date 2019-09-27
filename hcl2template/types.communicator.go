@@ -5,6 +5,7 @@ import (
 
 	"github.com/hashicorp/hcl2/hcl"
 	"github.com/hashicorp/hcl2/hcl/hclsyntax"
+	"github.com/hashicorp/hcl2/hcldec"
 )
 
 type Communicator struct {
@@ -12,6 +13,8 @@ type Communicator struct {
 	Type string
 	// Given name
 	Name string
+
+	// Value cty.Value
 
 	HCL2Ref HCL2Ref
 }
@@ -32,10 +35,27 @@ func (p *Parser) decodeCommunicatorConfig(block *hcl.Block) (*Communicator, hcl.
 
 	diags := hcl.Diagnostics{}
 
+	spec, found := p.CommunicatorSchemas[output.Type]
+	if !found {
+		diags = append(diags, &hcl.Diagnostic{
+			Severity: hcl.DiagError,
+			Summary:  "Unknown " + communicatorLabel + " type " + output.Type,
+			Detail: "A " + communicatorLabel + " type must start with a letter and " +
+				"may contain only letters, digits, underscores, and dashes.",
+			Subject: &block.DefRange,
+		})
+		return output, diags
+	} else {
+		v, moreDiags := hcldec.Decode(block.Body, spec, nil)
+		diags = append(diags, moreDiags...)
+		_ = v
+		// output.Value = v
+	}
+
 	if !hclsyntax.ValidIdentifier(output.Name) {
 		diags = append(diags, &hcl.Diagnostic{
 			Severity: hcl.DiagError,
-			Summary:  "Invalid " + communicatorLabel + " type",
+			Summary:  "Invalid " + communicatorLabel + " name",
 			Detail: "A " + communicatorLabel + " type must start with a letter and " +
 				"may contain only letters, digits, underscores, and dashes.",
 			Subject: &block.DefRange,
