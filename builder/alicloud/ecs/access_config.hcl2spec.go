@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AlicloudAccessConfig) HCL2Spec() hcldec.ObjectSpec {
+func (*AlicloudAccessConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"AlicloudAccessKey":      &hcldec.AttrSpec{Name: "access_key", Type: cty.String, Required: false},
 		"AlicloudSecretKey":      &hcldec.AttrSpec{Name: "secret_key", Type: cty.String, Required: false},
@@ -15,5 +15,5 @@ func (*AlicloudAccessConfig) HCL2Spec() hcldec.ObjectSpec {
 		"AlicloudSkipValidation": &hcldec.AttrSpec{Name: "skip_region_validation", Type: cty.Bool, Required: false},
 		"SecurityToken":          &hcldec.AttrSpec{Name: "security_token", Type: cty.String, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	return s
 }

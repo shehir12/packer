@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AccessConfig) HCL2Spec() hcldec.ObjectSpec {
+func (*AccessConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"AccessKey":             &hcldec.AttrSpec{Name: "access_key", Type: cty.String, Required: false},
 		"CustomEndpointEc2":     &hcldec.AttrSpec{Name: "custom_endpoint_ec2", Type: cty.String, Required: false},
@@ -20,17 +20,19 @@ func (*AccessConfig) HCL2Spec() hcldec.ObjectSpec {
 		"SkipValidation":        &hcldec.AttrSpec{Name: "skip_region_validation", Type: cty.Bool, Required: false},
 		"SkipMetadataApiCheck":  &hcldec.AttrSpec{Name: "skip_metadata_api_check", Type: cty.Bool, Required: false},
 		"Token":                 &hcldec.AttrSpec{Name: "token", Type: cty.String, Required: false},
-		"VaultAWSEngine":        nil,
 	}
-	return hcldec.ObjectSpec(s)
+	for k, v := range (*AccessConfig)(nil).VaultAWSEngine.HCL2Spec() {
+		s[k] = v
+	}
+	return s
 }
 
-func (*VaultAWSEngineOptions) HCL2Spec() hcldec.ObjectSpec {
+func (*VaultAWSEngineOptions) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"Name":       &hcldec.AttrSpec{Name: "name", Type: cty.String, Required: false},
 		"RoleARN":    &hcldec.AttrSpec{Name: "role_arn", Type: cty.String, Required: false},
 		"TTL":        &hcldec.AttrSpec{Name: "ttl", Type: cty.String, Required: false},
 		"EngineName": &hcldec.AttrSpec{Name: "engine_name", Type: cty.String, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	return s
 }

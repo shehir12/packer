@@ -1,3 +1,5 @@
+//go:generate hcl2-schema -type Provisioner
+
 // Package shell defines code that is common in shells
 package shell
 

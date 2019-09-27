@@ -7,15 +7,17 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*PackerConfig) HCL2Spec() hcldec.ObjectSpec {
+func (*PackerConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"PackerBuildName":     &hcldec.AttrSpec{Name: "packer_build_name", Type: cty.String, Required: false},
 		"PackerBuilderType":   &hcldec.AttrSpec{Name: "packer_builder_type", Type: cty.String, Required: false},
 		"PackerDebug":         &hcldec.AttrSpec{Name: "packer_debug", Type: cty.Bool, Required: false},
 		"PackerForce":         &hcldec.AttrSpec{Name: "packer_force", Type: cty.Bool, Required: false},
 		"PackerOnError":       &hcldec.AttrSpec{Name: "packer_on_error", Type: cty.String, Required: false},
-		"PackerUserVars":      nil,
 		"PackerSensitiveVars": &hcldec.AttrSpec{Name: "packer_sensitive_variables", Type: cty.List(cty.String), Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	for k, v := range (*PackerConfig)(nil).PackerUserVars.HCL2Spec() {
+		s[k] = v
+	}
+	return s
 }

@@ -7,10 +7,8 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*Config) HCL2Spec() hcldec.ObjectSpec {
+func (*Config) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
-		"AMIMappings":       nil,
-		"ChrootMounts":      nil,
 		"CommandWrapper":    &hcldec.AttrSpec{Name: "command_wrapper", Type: cty.String, Required: false},
 		"CopyFiles":         &hcldec.AttrSpec{Name: "copy_files", Type: cty.List(cty.String), Required: false},
 		"DevicePath":        &hcldec.AttrSpec{Name: "device_path", Type: cty.String, Required: false},
@@ -22,12 +20,33 @@ func (*Config) HCL2Spec() hcldec.ObjectSpec {
 		"PostMountCommands": &hcldec.AttrSpec{Name: "post_mount_commands", Type: cty.List(cty.String), Required: false},
 		"PreMountCommands":  &hcldec.AttrSpec{Name: "pre_mount_commands", Type: cty.List(cty.String), Required: false},
 		"RootDeviceName":    &hcldec.AttrSpec{Name: "root_device_name", Type: cty.String, Required: false},
-		"RootVolumeSize":    nil,
 		"RootVolumeType":    &hcldec.AttrSpec{Name: "root_volume_type", Type: cty.String, Required: false},
 		"SourceAmi":         &hcldec.AttrSpec{Name: "source_ami", Type: cty.String, Required: false},
-		"SourceAmiFilter":   nil,
-		"RootVolumeTags":    nil,
 		"Architecture":      &hcldec.AttrSpec{Name: "ami_architecture", Type: cty.String, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	for k, v := range (*Config)(nil).PackerConfig.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).AMIConfig.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).AccessConfig.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).AMIMappings.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).ChrootMounts.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).RootVolumeSize.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).SourceAmiFilter.HCL2Spec() {
+		s[k] = v
+	}
+	for k, v := range (*Config)(nil).RootVolumeTags.HCL2Spec() {
+		s[k] = v
+	}
+	return s
 }

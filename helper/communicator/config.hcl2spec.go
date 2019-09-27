@@ -7,15 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*Config) HCL2Spec() hcldec.ObjectSpec {
-	s := map[string]hcldec.Spec{
-		"Type":               &hcldec.AttrSpec{Name: "communicator", Type: cty.String, Required: false},
-		"PauseBeforeConnect": &hcldec.AttrSpec{Name: "pause_before_connecting", Type: cty.String, Required: false},
-	}
-	return hcldec.ObjectSpec(s)
-}
-
-func (*SSH) HCL2Spec() hcldec.ObjectSpec {
+func (*SSH) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"SSHHost":                   &hcldec.AttrSpec{Name: "ssh_host", Type: cty.String, Required: false},
 		"SSHPort":                   &hcldec.AttrSpec{Name: "ssh_port", Type: cty.Number, Required: false},
@@ -46,10 +38,10 @@ func (*SSH) HCL2Spec() hcldec.ObjectSpec {
 		"SSHRemoteTunnels":          &hcldec.AttrSpec{Name: "ssh_remote_tunnels", Type: cty.List(cty.String), Required: false},
 		"SSHLocalTunnels":           &hcldec.AttrSpec{Name: "ssh_local_tunnels", Type: cty.List(cty.String), Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	return s
 }
 
-func (*WinRM) HCL2Spec() hcldec.ObjectSpec {
+func (*WinRM) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"WinRMUser":     &hcldec.AttrSpec{Name: "winrm_username", Type: cty.String, Required: false},
 		"WinRMPassword": &hcldec.AttrSpec{Name: "winrm_password", Type: cty.String, Required: false},
@@ -60,5 +52,5 @@ func (*WinRM) HCL2Spec() hcldec.ObjectSpec {
 		"WinRMInsecure": &hcldec.AttrSpec{Name: "winrm_insecure", Type: cty.Bool, Required: false},
 		"WinRMUseNTLM":  &hcldec.AttrSpec{Name: "winrm_use_ntlm", Type: cty.Bool, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	return s
 }

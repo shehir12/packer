@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*RunConfig) HCL2Spec() hcldec.ObjectSpec {
+func (*RunConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"AssociatePublicIpAddress": &hcldec.AttrSpec{Name: "associate_public_ip_address", Type: cty.Bool, Required: false},
 		"ZoneId":                   &hcldec.AttrSpec{Name: "zone_id", Type: cty.String, Required: false},
@@ -30,8 +30,10 @@ func (*RunConfig) HCL2Spec() hcldec.ObjectSpec {
 		"InternetChargeType":       &hcldec.AttrSpec{Name: "internet_charge_type", Type: cty.String, Required: false},
 		"InternetMaxBandwidthOut":  &hcldec.AttrSpec{Name: "internet_max_bandwidth_out", Type: cty.Number, Required: false},
 		"WaitSnapshotReadyTimeout": &hcldec.AttrSpec{Name: "wait_snapshot_ready_timeout", Type: cty.Number, Required: false},
-		"Comm":                     nil,
 		"SSHPrivateIp":             &hcldec.AttrSpec{Name: "ssh_private_ip", Type: cty.Bool, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	for k, v := range (*RunConfig)(nil).Comm.HCL2Spec() {
+		s[k] = v
+	}
+	return s
 }

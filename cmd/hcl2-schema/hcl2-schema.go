@@ -91,11 +91,16 @@ func main() {
 			sd := StructDef{StructName: t}
 			fields := structDecl.Fields.List
 			for _, field := range fields {
-				if len(field.Names) == 0 || field.Tag == nil {
+				if field.Tag == nil {
 					continue
 				}
-				fieldName := field.Names[0].Name
+
 				fieldType := string(b[field.Type.Pos()-1 : field.Type.End()-1])
+				fieldName := fieldType[strings.Index(fieldType, ".")+1:]
+				if len(field.Names) > 0 {
+					fieldName = field.Names[0].Name
+				}
+
 				if !unicode.IsUpper([]rune(fieldName)[0]) {
 					continue
 				}
@@ -142,9 +147,8 @@ func main() {
 					if strings.Contains(fieldType, "func") {
 						continue
 					}
-					fd.Spec = `nil`
-					// fd.Type = "hcl2template.TypeBlock"
-					// fd.Elem = "(*" + fieldType + ").HCL2Schema(nil)"
+					sd.Squashed = append(sd.Squashed, fieldName)
+					continue
 				}
 
 				sd.Fields = append(sd.Fields, fd)
@@ -166,6 +170,11 @@ func main() {
 		StructDefs: res,
 	})
 	if err != nil {
+		log.Fatalf("err templating: %v", err)
+	}
+
+	formattedBytes, err := format.Source(output.Bytes())
+	if err != nil {
 		log.Fatalf("err: %v", err)
 	}
 
@@ -174,11 +183,6 @@ func main() {
 		log.Fatalf("err: %v", err)
 	}
 	defer outputFile.Close()
-
-	formattedBytes, err := format.Source(output.Bytes())
-	if err != nil {
-		log.Fatalf("err: %v", err)
-	}
 
 	_, err = io.Copy(outputFile, bytes.NewBuffer(formattedBytes))
 	if err != nil {
@@ -199,6 +203,7 @@ type FieldDef struct {
 type StructDef struct {
 	StructName string
 	Fields     []FieldDef
+	Squashed   []string
 }
 
 var structDocsTemplate = template.Must(template.New("structDocsTemplate").
@@ -214,12 +219,18 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 {{ range .StructDefs }}
-func (*{{ .StructName }}) HCL2Spec() hcldec.ObjectSpec {
+{{ $StructName := .StructName}}
+func (*{{ .StructName }}) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		{{- range .Fields}}
 		"{{ .Name }}": {{ .Spec }},
 		{{- end }}
 	}
-	return hcldec.ObjectSpec(s)
+	{{- range .Squashed }}
+	for k,v := range (*{{ $StructName }})(nil).{{ . }}.HCL2Spec() {
+		s[k] = v
+	}
+	{{- end}}
+	return s
 }
 {{end}}`))

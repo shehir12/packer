@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*ISOConfig) HCL2Spec() hcldec.ObjectSpec {
+func (*ISOConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"ISOChecksum":     &hcldec.AttrSpec{Name: "iso_checksum", Type: cty.String, Required: false},
 		"ISOChecksumURL":  &hcldec.AttrSpec{Name: "iso_checksum_url", Type: cty.String, Required: false},
@@ -17,5 +17,5 @@ func (*ISOConfig) HCL2Spec() hcldec.ObjectSpec {
 		"TargetPath":      &hcldec.AttrSpec{Name: "iso_target_path", Type: cty.String, Required: false},
 		"TargetExtension": &hcldec.AttrSpec{Name: "iso_target_extension", Type: cty.String, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
+	return s
 }

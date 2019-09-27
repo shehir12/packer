@@ -7,7 +7,7 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func (*AlicloudDiskDevice) HCL2Spec() hcldec.ObjectSpec {
+func (*AlicloudDiskDevice) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"DiskName":           &hcldec.AttrSpec{Name: "disk_name", Type: cty.String, Required: false},
 		"DiskCategory":       &hcldec.AttrSpec{Name: "disk_category", Type: cty.String, Required: false},
@@ -18,13 +18,5 @@ func (*AlicloudDiskDevice) HCL2Spec() hcldec.ObjectSpec {
 		"Device":             &hcldec.AttrSpec{Name: "disk_device", Type: cty.String, Required: false},
 		"Encrypted":          &hcldec.AttrSpec{Name: "disk_encrypted", Type: cty.Bool, Required: false},
 	}
-	return hcldec.ObjectSpec(s)
-}
-
-func (*AlicloudDiskDevices) HCL2Spec() hcldec.ObjectSpec {
-	s := map[string]hcldec.Spec{
-		"ECSSystemDiskMapping":  nil,
-		"ECSImagesDiskMappings": nil,
-	}
-	return hcldec.ObjectSpec(s)
+	return s
 }
