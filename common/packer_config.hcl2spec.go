@@ -9,13 +9,13 @@ import (
 
 func (*PackerConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"PackerBuildName":     &hcldec.AttrSpec{Name: "PackerBuildName", Type: cty.String, Required: false},
-		"PackerBuilderType":   &hcldec.AttrSpec{Name: "PackerBuilderType", Type: cty.String, Required: false},
-		"PackerDebug":         &hcldec.AttrSpec{Name: "PackerDebug", Type: cty.Bool, Required: false},
-		"PackerForce":         &hcldec.AttrSpec{Name: "PackerForce", Type: cty.Bool, Required: false},
-		"PackerOnError":       &hcldec.AttrSpec{Name: "PackerOnError", Type: cty.String, Required: false},
+		"PackerBuildName":     &hcldec.AttrSpec{Name: "packer_build_name", Type: cty.String, Required: false},
+		"PackerBuilderType":   &hcldec.AttrSpec{Name: "packer_builder_type", Type: cty.String, Required: false},
+		"PackerDebug":         &hcldec.AttrSpec{Name: "packer_debug", Type: cty.Bool, Required: false},
+		"PackerForce":         &hcldec.AttrSpec{Name: "packer_force", Type: cty.Bool, Required: false},
+		"PackerOnError":       &hcldec.AttrSpec{Name: "packer_on_error", Type: cty.String, Required: false},
 		"PackerUserVars":      nil,
-		"PackerSensitiveVars": &hcldec.AttrSpec{Name: "PackerSensitiveVars", Type: cty.List(cty.String), Required: false},
+		"PackerSensitiveVars": &hcldec.AttrSpec{Name: "packer_sensitive_variables", Type: cty.List(cty.String), Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }

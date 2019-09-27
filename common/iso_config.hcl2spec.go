@@ -9,13 +9,13 @@ import (
 
 func (*ISOConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"ISOChecksum":     &hcldec.AttrSpec{Name: "ISOChecksum", Type: cty.String, Required: false},
-		"ISOChecksumURL":  &hcldec.AttrSpec{Name: "ISOChecksumURL", Type: cty.String, Required: false},
-		"ISOChecksumType": &hcldec.AttrSpec{Name: "ISOChecksumType", Type: cty.String, Required: false},
-		"RawSingleISOUrl": &hcldec.AttrSpec{Name: "RawSingleISOUrl", Type: cty.String, Required: false},
-		"ISOUrls":         &hcldec.AttrSpec{Name: "ISOUrls", Type: cty.List(cty.String), Required: false},
-		"TargetPath":      &hcldec.AttrSpec{Name: "TargetPath", Type: cty.String, Required: false},
-		"TargetExtension": &hcldec.AttrSpec{Name: "TargetExtension", Type: cty.String, Required: false},
+		"ISOChecksum":     &hcldec.AttrSpec{Name: "iso_checksum", Type: cty.String, Required: false},
+		"ISOChecksumURL":  &hcldec.AttrSpec{Name: "iso_checksum_url", Type: cty.String, Required: false},
+		"ISOChecksumType": &hcldec.AttrSpec{Name: "iso_checksum_type", Type: cty.String, Required: false},
+		"RawSingleISOUrl": &hcldec.AttrSpec{Name: "iso_url", Type: cty.String, Required: false},
+		"ISOUrls":         &hcldec.AttrSpec{Name: "iso_urls", Type: cty.List(cty.String), Required: false},
+		"TargetPath":      &hcldec.AttrSpec{Name: "iso_target_path", Type: cty.String, Required: false},
+		"TargetExtension": &hcldec.AttrSpec{Name: "iso_target_extension", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }

@@ -9,16 +9,16 @@ import (
 
 func (*BlockDevice) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"DeleteOnTermination": &hcldec.AttrSpec{Name: "DeleteOnTermination", Type: cty.Bool, Required: false},
-		"DeviceName":          &hcldec.AttrSpec{Name: "DeviceName", Type: cty.String, Required: false},
-		"Encrypted":           &hcldec.AttrSpec{Name: "Encrypted", Type: cty.Bool, Required: false},
+		"DeleteOnTermination": &hcldec.AttrSpec{Name: "delete_on_termination", Type: cty.Bool, Required: false},
+		"DeviceName":          &hcldec.AttrSpec{Name: "device_name", Type: cty.String, Required: false},
+		"Encrypted":           &hcldec.AttrSpec{Name: "encrypted", Type: cty.Bool, Required: false},
 		"IOPS":                nil,
-		"NoDevice":            &hcldec.AttrSpec{Name: "NoDevice", Type: cty.Bool, Required: false},
-		"SnapshotId":          &hcldec.AttrSpec{Name: "SnapshotId", Type: cty.String, Required: false},
-		"VirtualName":         &hcldec.AttrSpec{Name: "VirtualName", Type: cty.String, Required: false},
-		"VolumeType":          &hcldec.AttrSpec{Name: "VolumeType", Type: cty.String, Required: false},
+		"NoDevice":            &hcldec.AttrSpec{Name: "no_device", Type: cty.Bool, Required: false},
+		"SnapshotId":          &hcldec.AttrSpec{Name: "snapshot_id", Type: cty.String, Required: false},
+		"VirtualName":         &hcldec.AttrSpec{Name: "virtual_name", Type: cty.String, Required: false},
+		"VolumeType":          &hcldec.AttrSpec{Name: "volume_type", Type: cty.String, Required: false},
 		"VolumeSize":          nil,
-		"KmsKeyId":            &hcldec.AttrSpec{Name: "KmsKeyId", Type: cty.String, Required: false},
+		"KmsKeyId":            &hcldec.AttrSpec{Name: "kms_key_id", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }

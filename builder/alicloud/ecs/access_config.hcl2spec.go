@@ -9,11 +9,11 @@ import (
 
 func (*AlicloudAccessConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"AlicloudAccessKey":      &hcldec.AttrSpec{Name: "AlicloudAccessKey", Type: cty.String, Required: false},
-		"AlicloudSecretKey":      &hcldec.AttrSpec{Name: "AlicloudSecretKey", Type: cty.String, Required: false},
-		"AlicloudRegion":         &hcldec.AttrSpec{Name: "AlicloudRegion", Type: cty.String, Required: false},
-		"AlicloudSkipValidation": &hcldec.AttrSpec{Name: "AlicloudSkipValidation", Type: cty.Bool, Required: false},
-		"SecurityToken":          &hcldec.AttrSpec{Name: "SecurityToken", Type: cty.String, Required: false},
+		"AlicloudAccessKey":      &hcldec.AttrSpec{Name: "access_key", Type: cty.String, Required: false},
+		"AlicloudSecretKey":      &hcldec.AttrSpec{Name: "secret_key", Type: cty.String, Required: false},
+		"AlicloudRegion":         &hcldec.AttrSpec{Name: "region", Type: cty.String, Required: false},
+		"AlicloudSkipValidation": &hcldec.AttrSpec{Name: "skip_region_validation", Type: cty.Bool, Required: false},
+		"SecurityToken":          &hcldec.AttrSpec{Name: "security_token", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }

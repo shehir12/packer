@@ -16,6 +16,7 @@ import (
 	"text/template"
 	"unicode"
 
+	"github.com/fatih/structtag"
 	"github.com/hashicorp/hcl2/hcldec"
 	"github.com/zclconf/go-cty/cty"
 )
@@ -90,7 +91,7 @@ func main() {
 			sd := StructDef{StructName: t}
 			fields := structDecl.Fields.List
 			for _, field := range fields {
-				if len(field.Names) == 0 {
+				if len(field.Names) == 0 || field.Tag == nil {
 					continue
 				}
 				fieldName := field.Names[0].Name
@@ -100,29 +101,40 @@ func main() {
 				}
 				fd := FieldDef{Name: fieldName}
 
+				tag := field.Tag.Value[1:]
+				tag = tag[:len(tag)-1]
+				tags, err := structtag.Parse(tag)
+				if err != nil {
+					log.Fatalf("structtag.Parse(%s): err: %v", field.Tag.Value, err)
+				}
+				mstr, err := tags.Get("mapstructure")
+				if err != nil {
+					continue
+				}
+
 				switch fieldType {
 				case "[]string":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
-						Name:     fieldName,
+						Name:     mstr.Name,
 						Type:     cty.List(cty.String),
 						Required: false,
 					})
 				case "[]byte", "string", "time.Duration":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
-						Name:     fieldName,
+						Name:     mstr.Name,
 						Type:     cty.String,
 						Required: false,
 					})
 					// fd.Type = "hcl2template.Type" + strings.Title(fieldType)
 				case "int", "int32", "float":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
-						Name:     fieldName,
+						Name:     mstr.Name,
 						Type:     cty.Number,
 						Required: false,
 					})
 				case "bool", "config.Trilean":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
-						Name:     fieldName,
+						Name:     mstr.Name,
 						Type:     cty.Bool,
 						Required: false,
 					})

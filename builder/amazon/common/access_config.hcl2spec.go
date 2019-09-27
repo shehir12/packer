@@ -9,17 +9,17 @@ import (
 
 func (*AccessConfig) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"AccessKey":             &hcldec.AttrSpec{Name: "AccessKey", Type: cty.String, Required: false},
-		"CustomEndpointEc2":     &hcldec.AttrSpec{Name: "CustomEndpointEc2", Type: cty.String, Required: false},
-		"DecodeAuthZMessages":   &hcldec.AttrSpec{Name: "DecodeAuthZMessages", Type: cty.Bool, Required: false},
-		"InsecureSkipTLSVerify": &hcldec.AttrSpec{Name: "InsecureSkipTLSVerify", Type: cty.Bool, Required: false},
-		"MFACode":               &hcldec.AttrSpec{Name: "MFACode", Type: cty.String, Required: false},
-		"ProfileName":           &hcldec.AttrSpec{Name: "ProfileName", Type: cty.String, Required: false},
-		"RawRegion":             &hcldec.AttrSpec{Name: "RawRegion", Type: cty.String, Required: false},
-		"SecretKey":             &hcldec.AttrSpec{Name: "SecretKey", Type: cty.String, Required: false},
-		"SkipValidation":        &hcldec.AttrSpec{Name: "SkipValidation", Type: cty.Bool, Required: false},
-		"SkipMetadataApiCheck":  &hcldec.AttrSpec{Name: "SkipMetadataApiCheck", Type: cty.Bool, Required: false},
-		"Token":                 &hcldec.AttrSpec{Name: "Token", Type: cty.String, Required: false},
+		"AccessKey":             &hcldec.AttrSpec{Name: "access_key", Type: cty.String, Required: false},
+		"CustomEndpointEc2":     &hcldec.AttrSpec{Name: "custom_endpoint_ec2", Type: cty.String, Required: false},
+		"DecodeAuthZMessages":   &hcldec.AttrSpec{Name: "decode_authorization_messages", Type: cty.Bool, Required: false},
+		"InsecureSkipTLSVerify": &hcldec.AttrSpec{Name: "insecure_skip_tls_verify", Type: cty.Bool, Required: false},
+		"MFACode":               &hcldec.AttrSpec{Name: "mfa_code", Type: cty.String, Required: false},
+		"ProfileName":           &hcldec.AttrSpec{Name: "profile", Type: cty.String, Required: false},
+		"RawRegion":             &hcldec.AttrSpec{Name: "region", Type: cty.String, Required: false},
+		"SecretKey":             &hcldec.AttrSpec{Name: "secret_key", Type: cty.String, Required: false},
+		"SkipValidation":        &hcldec.AttrSpec{Name: "skip_region_validation", Type: cty.Bool, Required: false},
+		"SkipMetadataApiCheck":  &hcldec.AttrSpec{Name: "skip_metadata_api_check", Type: cty.Bool, Required: false},
+		"Token":                 &hcldec.AttrSpec{Name: "token", Type: cty.String, Required: false},
 		"VaultAWSEngine":        nil,
 	}
 	return hcldec.ObjectSpec(s)
@@ -27,10 +27,10 @@ func (*AccessConfig) HCL2Spec() hcldec.ObjectSpec {
 
 func (*VaultAWSEngineOptions) HCL2Spec() hcldec.ObjectSpec {
 	s := map[string]hcldec.Spec{
-		"Name":       &hcldec.AttrSpec{Name: "Name", Type: cty.String, Required: false},
-		"RoleARN":    &hcldec.AttrSpec{Name: "RoleARN", Type: cty.String, Required: false},
-		"TTL":        &hcldec.AttrSpec{Name: "TTL", Type: cty.String, Required: false},
-		"EngineName": &hcldec.AttrSpec{Name: "EngineName", Type: cty.String, Required: false},
+		"Name":       &hcldec.AttrSpec{Name: "name", Type: cty.String, Required: false},
+		"RoleARN":    &hcldec.AttrSpec{Name: "role_arn", Type: cty.String, Required: false},
+		"TTL":        &hcldec.AttrSpec{Name: "ttl", Type: cty.String, Required: false},
+		"EngineName": &hcldec.AttrSpec{Name: "engine_name", Type: cty.String, Required: false},
 	}
 	return hcldec.ObjectSpec(s)
 }
