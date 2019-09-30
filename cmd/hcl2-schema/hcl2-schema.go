@@ -127,6 +127,12 @@ func main() {
 						Type:     cty.List(cty.String),
 						Required: false,
 					})
+				case "[]int":
+					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
+						Name:     mstr.Name,
+						Type:     cty.List(cty.Number),
+						Required: false,
+					})
 				case "[]byte", "string", "time.Duration":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
 						Name:     mstr.Name,
@@ -146,7 +152,7 @@ func main() {
 						Type:     cty.Bool,
 						Required: false,
 					})
-				case "map[string]string", "[][]string", "[]int", "TagMap":
+				case "map[string]string", "[][]string", "TagMap":
 					fd.Spec = "nil /* TODO */"
 				default:
 					if len(mstr.Options) > 0 && mstr.Options[0] == "squash" {
