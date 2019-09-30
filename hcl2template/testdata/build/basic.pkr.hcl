@@ -20,6 +20,10 @@ build {
         }
 
         shell {
+            valid_exit_codes = [
+                0,
+                42,
+            ]
             script = [
                 "script-1.sh",
                 "script-2.sh",
