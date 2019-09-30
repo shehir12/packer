@@ -154,7 +154,7 @@ func main() {
 					})
 				case "map[string]string", "[][]string", "TagMap":
 					fd.Spec = "nil /* TODO */"
-				default:
+				default: // nested structures
 					if len(mstr.Options) > 0 && mstr.Options[0] == "squash" {
 						sd.Squashed = append(sd.Squashed, fieldName)
 						continue
