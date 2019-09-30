@@ -25,8 +25,8 @@ func getBasicParser() *Parser {
 				{Type: "amazon-import"},
 			}},
 		CommunicatorSchemas: map[string]hcldec.Spec{
-			"ssh":   (*communicator.SSH).HCL2Spec(nil),
-			"winrm": (*communicator.WinRM).HCL2Spec(nil),
+			"ssh":   hcldec.ObjectSpec((*communicator.SSH).HCL2Spec(nil)),
+			"winrm": hcldec.ObjectSpec((*communicator.WinRM).HCL2Spec(nil)),
 		},
 	}
 }
