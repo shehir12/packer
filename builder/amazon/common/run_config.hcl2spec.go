@@ -11,18 +11,21 @@ func (*RunConfig) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		"AssociatePublicIpAddress":          &hcldec.AttrSpec{Name: "associate_public_ip_address", Type: cty.Bool, Required: false},
 		"AvailabilityZone":                  &hcldec.AttrSpec{Name: "availability_zone", Type: cty.String, Required: false},
+		"BlockDurationMinutes":              &hcldec.AttrSpec{Name: "block_duration_minutes", Type: cty.Number, Required: false},
 		"DisableStopInstance":               &hcldec.AttrSpec{Name: "disable_stop_instance", Type: cty.Bool, Required: false},
 		"EbsOptimized":                      &hcldec.AttrSpec{Name: "ebs_optimized", Type: cty.Bool, Required: false},
 		"EnableT2Unlimited":                 &hcldec.AttrSpec{Name: "enable_t2_unlimited", Type: cty.Bool, Required: false},
 		"IamInstanceProfile":                &hcldec.AttrSpec{Name: "iam_instance_profile", Type: cty.String, Required: false},
 		"InstanceInitiatedShutdownBehavior": &hcldec.AttrSpec{Name: "shutdown_behavior", Type: cty.String, Required: false},
 		"InstanceType":                      &hcldec.AttrSpec{Name: "instance_type", Type: cty.String, Required: false},
+		"RunTags":                           nil, /* TODO */
 		"SecurityGroupId":                   &hcldec.AttrSpec{Name: "security_group_id", Type: cty.String, Required: false},
 		"SecurityGroupIds":                  &hcldec.AttrSpec{Name: "security_group_ids", Type: cty.List(cty.String), Required: false},
 		"SourceAmi":                         &hcldec.AttrSpec{Name: "source_ami", Type: cty.String, Required: false},
 		"SpotInstanceTypes":                 &hcldec.AttrSpec{Name: "spot_instance_types", Type: cty.List(cty.String), Required: false},
 		"SpotPrice":                         &hcldec.AttrSpec{Name: "spot_price", Type: cty.String, Required: false},
 		"SpotPriceAutoProduct":              &hcldec.AttrSpec{Name: "spot_price_auto_product", Type: cty.String, Required: false},
+		"SpotTags":                          nil, /* TODO */
 		"SubnetId":                          &hcldec.AttrSpec{Name: "subnet_id", Type: cty.String, Required: false},
 		"TemporaryKeyPairName":              &hcldec.AttrSpec{Name: "temporary_key_pair_name", Type: cty.String, Required: false},
 		"TemporarySGSourceCidrs":            &hcldec.AttrSpec{Name: "temporary_security_group_source_cidrs", Type: cty.List(cty.String), Required: false},
@@ -31,27 +34,10 @@ func (*RunConfig) HCL2Spec() map[string]hcldec.Spec {
 		"VpcId":                             &hcldec.AttrSpec{Name: "vpc_id", Type: cty.String, Required: false},
 		"WindowsPasswordTimeout":            &hcldec.AttrSpec{Name: "windows_password_timeout", Type: cty.String, Required: false},
 		"SSHInterface":                      &hcldec.AttrSpec{Name: "ssh_interface", Type: cty.String, Required: false},
-	}
-	for k, v := range (*RunConfig)(nil).BlockDurationMinutes.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).SecurityGroupFilter.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).RunTags.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).SourceAmiFilter.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).SpotTags.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).SubnetFilter.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*RunConfig)(nil).VpcFilter.HCL2Spec() {
-		s[k] = v
+		"security_group_filter":             &hcldec.BlockObjectSpec{TypeName: "SecurityGroupFilterOptions", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*RunConfig)(nil).SecurityGroupFilter.HCL2Spec())},
+		"source_ami_filter":                 &hcldec.BlockObjectSpec{TypeName: "AmiFilterOptions", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*RunConfig)(nil).SourceAmiFilter.HCL2Spec())},
+		"subnet_filter":                     &hcldec.BlockObjectSpec{TypeName: "SubnetFilterOptions", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*RunConfig)(nil).SubnetFilter.HCL2Spec())},
+		"vpc_filter":                        &hcldec.BlockObjectSpec{TypeName: "VpcFilterOptions", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*RunConfig)(nil).VpcFilter.HCL2Spec())},
 	}
 	for k, v := range (*RunConfig)(nil).Comm.HCL2Spec() {
 		s[k] = v

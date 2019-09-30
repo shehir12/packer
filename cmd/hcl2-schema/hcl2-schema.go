@@ -104,6 +104,9 @@ func main() {
 				if !unicode.IsUpper([]rune(fieldName)[0]) {
 					continue
 				}
+				if strings.Contains(fieldType, "func") {
+					continue
+				}
 				fd := FieldDef{Name: fieldName}
 
 				tag := field.Tag.Value[1:]
@@ -131,7 +134,7 @@ func main() {
 						Required: false,
 					})
 					// fd.Type = "hcl2template.Type" + strings.Title(fieldType)
-				case "int", "int32", "float":
+				case "int", "int32", "int64", "float":
 					fd.Spec = fmt.Sprintf("%#v", &hcldec.AttrSpec{
 						Name:     mstr.Name,
 						Type:     cty.Number,
@@ -143,11 +146,18 @@ func main() {
 						Type:     cty.Bool,
 						Required: false,
 					})
+				case "map[string]string", "[][]string", "[]int", "TagMap":
+					fd.Spec = "nil /* TODO */"
 				default:
-					if strings.Contains(fieldType, "func") {
+					if len(mstr.Options) > 0 && mstr.Options[0] == "squash" {
+						sd.Squashed = append(sd.Squashed, fieldName)
 						continue
 					}
-					sd.Squashed = append(sd.Squashed, fieldName)
+					sd.Nested = append(sd.Nested, NestedFieldDef{
+						FieldName: fieldName,
+						TypeName:  fieldType,
+						Accessor:  mstr.Name,
+					})
 					continue
 				}
 
@@ -163,9 +173,9 @@ func main() {
 		return
 	}
 
-	var output bytes.Buffer
+	output := bytes.NewBuffer(nil)
 
-	err = structDocsTemplate.Execute(&output, Output{
+	err = structDocsTemplate.Execute(output, Output{
 		Package:    f.Name.String(),
 		StructDefs: res,
 	})
@@ -175,7 +185,8 @@ func main() {
 
 	formattedBytes, err := format.Source(output.Bytes())
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Printf("formatting err: %v", err)
+		formattedBytes = output.Bytes()
 	}
 
 	outputFile, err := os.Create(outputPath)
@@ -199,10 +210,16 @@ type FieldDef struct {
 	Name string
 	Spec string
 }
+type NestedFieldDef struct {
+	TypeName  string
+	FieldName string
+	Accessor  string
+}
 
 type StructDef struct {
 	StructName string
 	Fields     []FieldDef
+	Nested     []NestedFieldDef
 	Squashed   []string
 }
 
@@ -224,6 +241,9 @@ func (*{{ .StructName }}) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
 		{{- range .Fields}}
 		"{{ .Name }}": {{ .Spec }},
+		{{- end }}
+		{{- range .Nested}}
+		"{{ .Accessor }}": &hcldec.BlockObjectSpec{TypeName: "{{ .TypeName }}", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*{{ $StructName }})(nil).{{ .FieldName }}.HCL2Spec())},
 		{{- end }}
 	}
 	{{- range .Squashed }}

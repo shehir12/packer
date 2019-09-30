@@ -12,17 +12,13 @@ func (*BlockDevice) HCL2Spec() map[string]hcldec.Spec {
 		"DeleteOnTermination": &hcldec.AttrSpec{Name: "delete_on_termination", Type: cty.Bool, Required: false},
 		"DeviceName":          &hcldec.AttrSpec{Name: "device_name", Type: cty.String, Required: false},
 		"Encrypted":           &hcldec.AttrSpec{Name: "encrypted", Type: cty.Bool, Required: false},
+		"IOPS":                &hcldec.AttrSpec{Name: "iops", Type: cty.Number, Required: false},
 		"NoDevice":            &hcldec.AttrSpec{Name: "no_device", Type: cty.Bool, Required: false},
 		"SnapshotId":          &hcldec.AttrSpec{Name: "snapshot_id", Type: cty.String, Required: false},
 		"VirtualName":         &hcldec.AttrSpec{Name: "virtual_name", Type: cty.String, Required: false},
 		"VolumeType":          &hcldec.AttrSpec{Name: "volume_type", Type: cty.String, Required: false},
+		"VolumeSize":          &hcldec.AttrSpec{Name: "volume_size", Type: cty.Number, Required: false},
 		"KmsKeyId":            &hcldec.AttrSpec{Name: "kms_key_id", Type: cty.String, Required: false},
-	}
-	for k, v := range (*BlockDevice)(nil).IOPS.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*BlockDevice)(nil).VolumeSize.HCL2Spec() {
-		s[k] = v
 	}
 	return s
 }

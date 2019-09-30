@@ -9,20 +9,25 @@ import (
 
 func (*Config) HCL2Spec() map[string]hcldec.Spec {
 	s := map[string]hcldec.Spec{
-		"CommandWrapper":    &hcldec.AttrSpec{Name: "command_wrapper", Type: cty.String, Required: false},
-		"CopyFiles":         &hcldec.AttrSpec{Name: "copy_files", Type: cty.List(cty.String), Required: false},
-		"DevicePath":        &hcldec.AttrSpec{Name: "device_path", Type: cty.String, Required: false},
-		"NVMEDevicePath":    &hcldec.AttrSpec{Name: "nvme_device_path", Type: cty.String, Required: false},
-		"FromScratch":       &hcldec.AttrSpec{Name: "from_scratch", Type: cty.Bool, Required: false},
-		"MountOptions":      &hcldec.AttrSpec{Name: "mount_options", Type: cty.List(cty.String), Required: false},
-		"MountPartition":    &hcldec.AttrSpec{Name: "mount_partition", Type: cty.String, Required: false},
-		"MountPath":         &hcldec.AttrSpec{Name: "mount_path", Type: cty.String, Required: false},
-		"PostMountCommands": &hcldec.AttrSpec{Name: "post_mount_commands", Type: cty.List(cty.String), Required: false},
-		"PreMountCommands":  &hcldec.AttrSpec{Name: "pre_mount_commands", Type: cty.List(cty.String), Required: false},
-		"RootDeviceName":    &hcldec.AttrSpec{Name: "root_device_name", Type: cty.String, Required: false},
-		"RootVolumeType":    &hcldec.AttrSpec{Name: "root_volume_type", Type: cty.String, Required: false},
-		"SourceAmi":         &hcldec.AttrSpec{Name: "source_ami", Type: cty.String, Required: false},
-		"Architecture":      &hcldec.AttrSpec{Name: "ami_architecture", Type: cty.String, Required: false},
+		"ChrootMounts":              nil, /* TODO */
+		"CommandWrapper":            &hcldec.AttrSpec{Name: "command_wrapper", Type: cty.String, Required: false},
+		"CopyFiles":                 &hcldec.AttrSpec{Name: "copy_files", Type: cty.List(cty.String), Required: false},
+		"DevicePath":                &hcldec.AttrSpec{Name: "device_path", Type: cty.String, Required: false},
+		"NVMEDevicePath":            &hcldec.AttrSpec{Name: "nvme_device_path", Type: cty.String, Required: false},
+		"FromScratch":               &hcldec.AttrSpec{Name: "from_scratch", Type: cty.Bool, Required: false},
+		"MountOptions":              &hcldec.AttrSpec{Name: "mount_options", Type: cty.List(cty.String), Required: false},
+		"MountPartition":            &hcldec.AttrSpec{Name: "mount_partition", Type: cty.String, Required: false},
+		"MountPath":                 &hcldec.AttrSpec{Name: "mount_path", Type: cty.String, Required: false},
+		"PostMountCommands":         &hcldec.AttrSpec{Name: "post_mount_commands", Type: cty.List(cty.String), Required: false},
+		"PreMountCommands":          &hcldec.AttrSpec{Name: "pre_mount_commands", Type: cty.List(cty.String), Required: false},
+		"RootDeviceName":            &hcldec.AttrSpec{Name: "root_device_name", Type: cty.String, Required: false},
+		"RootVolumeSize":            &hcldec.AttrSpec{Name: "root_volume_size", Type: cty.Number, Required: false},
+		"RootVolumeType":            &hcldec.AttrSpec{Name: "root_volume_type", Type: cty.String, Required: false},
+		"SourceAmi":                 &hcldec.AttrSpec{Name: "source_ami", Type: cty.String, Required: false},
+		"Architecture":              &hcldec.AttrSpec{Name: "ami_architecture", Type: cty.String, Required: false},
+		"ami_block_device_mappings": &hcldec.BlockObjectSpec{TypeName: "BlockDevices", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*Config)(nil).AMIMappings.HCL2Spec())},
+		"source_ami_filter":         &hcldec.BlockObjectSpec{TypeName: "awscommon.AmiFilterOptions", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*Config)(nil).SourceAmiFilter.HCL2Spec())},
+		"root_volume_tags":          &hcldec.BlockObjectSpec{TypeName: "awscommon.TagMap", LabelNames: []string(nil), Nested: hcldec.ObjectSpec((*Config)(nil).RootVolumeTags.HCL2Spec())},
 	}
 	for k, v := range (*Config)(nil).PackerConfig.HCL2Spec() {
 		s[k] = v
@@ -31,21 +36,6 @@ func (*Config) HCL2Spec() map[string]hcldec.Spec {
 		s[k] = v
 	}
 	for k, v := range (*Config)(nil).AccessConfig.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*Config)(nil).AMIMappings.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*Config)(nil).ChrootMounts.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*Config)(nil).RootVolumeSize.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*Config)(nil).SourceAmiFilter.HCL2Spec() {
-		s[k] = v
-	}
-	for k, v := range (*Config)(nil).RootVolumeTags.HCL2Spec() {
 		s[k] = v
 	}
 	return s
